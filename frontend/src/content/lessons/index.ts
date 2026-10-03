@@ -1,8 +1,9 @@
-// Lesson registry for Teema 1 "Raha psühholoogia" (steps 1.1–1.5).
-// Steps 6–7 have names in fortu_sisu.json but no supplied material yet.
+// Lesson registry for Teema 1 "Raha psühholoogia" (steps 1.1–1.7).
 import type { LessonProgress } from "@/src/state/types";
 
 import { eesmarkideAbc } from "./eesmarkide-abc";
+import { kokkuvote } from "./kokkuvote";
+import { minuMiksJaTulevikupilt } from "./minu-miks-ja-tulevikupilt";
 import { rahaJaMina } from "./raha-ja-mina";
 import { rahaJaTunded } from "./raha-ja-tunded";
 import { rahaJaUskumused } from "./raha-ja-uskumused";
@@ -11,7 +12,15 @@ import type { Lesson, Page, QuestionSection, Section } from "./types";
 
 export * from "./types";
 
-export const lessons: Lesson[] = [rahaJaMina, rahaJaTunded, rahaJaUskumused, rahaJaValikud, eesmarkideAbc];
+export const lessons: Lesson[] = [
+  rahaJaMina,
+  rahaJaTunded,
+  rahaJaUskumused,
+  rahaJaValikud,
+  eesmarkideAbc,
+  minuMiksJaTulevikupilt,
+  kokkuvote,
+];
 
 export const lessonById = (id: string) => lessons.find((l) => l.id === id);
 

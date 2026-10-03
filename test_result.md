@@ -107,3 +107,15 @@
 - Lesson ids: raha-ja-mina, raha-ja-tunded, raha-ja-uskumused, raha-ja-valikud, eesmarkide-abc
 - Progress saved in `state.lessons[lessonId]`; topic step completion derives from completed lessons
 - needs_retesting: true (frontend only; no backend)
+
+## 2026-06 — Added steps 1.6 & 1.7 + tappable topic rows
+- New lesson data: `src/content/lessons/minu-miks-ja-tulevikupilt.ts` (1.6), `src/content/lessons/kokkuvote.ts` (1.7)
+- Lesson ids: `minu-miks-ja-tulevikupilt`, `kokkuvote` (slugs match step names in fortu_sisu.json teema2_sammud)
+- Registered in `src/content/lessons/index.ts` → Teema 1 "Raha psühholoogia" now has all 7 lessons; topic becomes completable
+- 1.6 sections: Sissejuhatus (text), Teooria (text), Kontroll (profile mini-test, no right/wrong, dominant-key reflection), Tegevus (write/free-text, saved locally), Kokkuvõte (summary + teaser)
+- 1.7 sections: same shape; Tegevus write includes a "rahaline lubadus" free-text field
+- One question per page preserved (reuses existing profile/write/summary renderers)
+- `app/topic/[id].tsx`: each step row is now a Pressable → navigates to that lesson via `stepHref(state, topic.id, i)`; shows checkCircle when lesson done + chevronRight affordance. "Alusta" button kept as resume.
+- needs_retesting: true (frontend only; no backend)
+- Credentials: mock auth — tap "Jätka Google'iga" on opening screen
+

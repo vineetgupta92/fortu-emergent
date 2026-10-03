@@ -45,7 +45,7 @@ export default function SelfResult() {
       }
     >
       <View style={styles.top}>
-        <Mascot size={144} dark style={{ marginBottom: spacing.s2 }} />
+        <Mascot size={144} variant="celebrate" dark style={{ marginBottom: spacing.s2 }} />
         <View style={{ marginBottom: 14 }} testID="result-heart">
           <Icon name="heart" size={30} color={colors.pink} filled />
         </View>

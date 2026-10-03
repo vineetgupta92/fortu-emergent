@@ -1,5 +1,5 @@
-// Fortu's voice (Fraunces serif with gold italic emphasis) and the mascot placeholder.
-import { StyleProp, Text, TextStyle, View, ViewStyle } from "react-native";
+// Fortu's voice (Fraunces serif with gold italic emphasis) and the mascot illustration.
+import { Image, StyleProp, Text, TextStyle, View, ViewStyle } from "react-native";
 
 import { parseEmphasis } from "../content";
 import { ui } from "../content/ui";
@@ -32,18 +32,35 @@ export function FortuSay({ text, rohk, dark, big, style, testID }: SayProps) {
   );
 }
 
-/** Raccoon-in-a-green-hoodie placeholder — no real illustration supplied yet. */
-export function Mascot({ size, dark, style }: { size: number; dark?: boolean; style?: StyleProp<ViewStyle> }) {
-  const styles = useStyles();
+/** Fortu the raccoon. `default` greets, `celebrate` closes a step, `thumbsup` encourages. */
+const MASCOTS = {
+  default: require("../../assets/images/mascot/fortu-default.png"),
+  celebrate: require("../../assets/images/mascot/fortu-celebrate.png"),
+  thumbsup: require("../../assets/images/mascot/fortu-thumbsup.png"),
+} as const;
+
+export type MascotVariant = keyof typeof MASCOTS;
+
+export function Mascot({
+  size,
+  variant = "default",
+  style,
+}: {
+  size: number;
+  variant?: MascotVariant;
+  /** kept for call-site compatibility; the transparent PNG suits both themes */
+  dark?: boolean;
+  style?: StyleProp<ViewStyle>;
+}) {
   return (
     <View
       accessible
       accessibilityRole="image"
       accessibilityLabel={ui.mascotLabel}
       testID="mascot"
-      style={[styles.mascot, dark && styles.mascotDark, { width: size, height: size, borderRadius: size / 2 }, style]}
+      style={[{ alignSelf: "center" }, style]}
     >
-      <Text style={[styles.mascotText, dark && styles.mascotTextDark]}>{ui.mascotPlaceholder}</Text>
+      <Image source={MASCOTS[variant]} resizeMode="contain" style={{ width: size, height: size }} />
     </View>
   );
 }
@@ -54,8 +71,4 @@ const useStyles = makeStyles((c) => ({
   em: { fontFamily: fonts.serifItalic },
   emDark: { color: c.gold },
   emLight: { color: c.goldDark },
-  mascot: { alignSelf: "center", alignItems: "center", justifyContent: "center", backgroundColor: c.fSurface },
-  mascotDark: { backgroundColor: c.deepMascot },
-  mascotText: { fontFamily: fonts.semibold, fontSize: 15, lineHeight: 21, textAlign: "center", color: c.primary },
-  mascotTextDark: { color: c.white },
 }));

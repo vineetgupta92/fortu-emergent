@@ -2,6 +2,7 @@ import { Href, Redirect, useLocalSearchParams } from "expo-router";
 import { Text, View } from "react-native";
 
 import { PrimaryButton } from "@/src/components/Buttons";
+import { Mascot } from "@/src/components/Fortu";
 import { ScreenShell } from "@/src/components/ScreenShell";
 import { abcConcepts, screens, topics } from "@/src/content";
 import { ui } from "@/src/content/ui";
@@ -36,6 +37,7 @@ export default function AbcDone() {
       }
     >
       <View style={styles.wrap}>
+        <Mascot size={120} variant="celebrate" dark style={{ marginBottom: spacing.s2 }} />
         <Text style={styles.num} testID="abc-done-score">
           {abcScore(state)}
         </Text>

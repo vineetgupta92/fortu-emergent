@@ -15,7 +15,7 @@ import { ui } from "../../content/ui";
 import { lessonProgress } from "../../state/selectors";
 import { useFortu } from "../../state/store";
 import { fonts, makeStyles, radius, spacing, type } from "../../theme";
-import { FortuSay } from "../Fortu";
+import { FortuSay, Mascot } from "../Fortu";
 import { OptionCard, OptionState } from "../OptionCard";
 import { Blocks } from "./Blocks";
 import { Scale, WriteField } from "./Inputs";
@@ -157,6 +157,7 @@ function SectionPage({ lesson, section }: { lesson: Lesson; section: Exclude<Pag
   if (section.kind === "summary")
     return (
       <View style={{ gap: spacing.s2 }}>
+        <Mascot size={116} variant="celebrate" dark style={{ marginBottom: spacing.s1 }} />
         <Blocks blocks={section.blocks} dark testID={`lesson-blocks-${section.id}`} />
         <View style={styles.teaser} testID="lesson-teaser">
           <Text style={styles.teaserTitle}>{section.teaser.title}</Text>
@@ -182,7 +183,12 @@ function SectionPage({ lesson, section }: { lesson: Lesson; section: Exclude<Pag
           ))}
         </View>
         <Text style={styles.hint}>{ui.lesson.savedLocally}</Text>
-        {section.after.length ? <Blocks blocks={section.after} /> : null}
+        {section.after.length ? (
+          <View style={{ gap: spacing.s2 }}>
+            <Mascot size={92} variant="thumbsup" style={{ marginTop: spacing.s1 }} />
+            <Blocks blocks={section.after} />
+          </View>
+        ) : null}
       </View>
     );
 
