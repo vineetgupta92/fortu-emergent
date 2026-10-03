@@ -101,3 +101,9 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+## 2026-06 — Teema 1 "Raha psühholoogia" lessons (steps 1.1–1.5)
+- New: `app/lesson/[step]/index.tsx` (dark opening, only 1.1 & 1.2 have one), `app/lesson/[step]/[s].tsx` (page flow)
+- Lesson data: `src/content/lessons/*.ts`; pages derived by `lessonPages()` — ONE QUESTION PER PAGE
+- Lesson ids: raha-ja-mina, raha-ja-tunded, raha-ja-uskumused, raha-ja-valikud, eesmarkide-abc
+- Progress saved in `state.lessons[lessonId]`; topic step completion derives from completed lessons
+- needs_retesting: true (frontend only; no backend)

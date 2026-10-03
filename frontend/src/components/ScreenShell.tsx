@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import { ReactNode, useEffect, useRef } from "react";
 import { AccessibilityInfo, BackHandler, findNodeHandle, Platform, Pressable, ScrollView, Text, View } from "react-native";
 import Animated, { FadeIn, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ui } from "../content/ui";
@@ -24,6 +25,8 @@ type Props = {
   nav?: TabId;
   footer?: ReactNode;
   center?: boolean;
+  /** Use on screens with text inputs so the focused field stays above the keyboard. */
+  keyboard?: boolean;
   children: ReactNode;
 };
 
@@ -57,6 +60,7 @@ export function ScreenShell({
   nav,
   footer,
   center,
+  keyboard,
   children,
 }: Props) {
   const dark = variant === "dark";
@@ -85,6 +89,13 @@ export function ScreenShell({
   }, []);
 
   const bottomSpace = footer || nav ? spacing.s3 : spacing.s3 + insets.bottom;
+  const scrollProps = {
+    style: styles.flex,
+    contentContainerStyle: [styles.scroll, center && styles.center, { paddingBottom: bottomSpace }],
+    showsVerticalScrollIndicator: false,
+    testID: `${testID}-scroll`,
+  };
+  const body = <Animated.View entering={FadeIn.duration(260)}>{children}</Animated.View>;
 
   return (
     <View style={[styles.root, dark ? styles.rootDark : styles.rootLight]} testID={testID}>
@@ -122,14 +133,13 @@ export function ScreenShell({
         {progress ? <HeaderProgress {...progress} /> : null}
       </View>
 
-      <ScrollView
-        style={styles.flex}
-        contentContainerStyle={[styles.scroll, center && styles.center, { paddingBottom: bottomSpace }]}
-        showsVerticalScrollIndicator={false}
-        testID={`${testID}-scroll`}
-      >
-        <Animated.View entering={FadeIn.duration(260)}>{children}</Animated.View>
-      </ScrollView>
+      {keyboard ? (
+        <KeyboardAwareScrollView {...scrollProps} bottomOffset={120}>
+          {body}
+        </KeyboardAwareScrollView>
+      ) : (
+        <ScrollView {...scrollProps}>{body}</ScrollView>
+      )}
 
       {footer ? (
         <View style={[styles.footer, dark && styles.footerDark, { paddingBottom: nav ? spacing.s1 : spacing.s1 + insets.bottom }]}>

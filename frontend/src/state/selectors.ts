@@ -2,7 +2,13 @@
 import { config } from "../config";
 import { ABC_CORRECT_INDEX, START_TOPIC_ID, Topic, topics } from "../content";
 import { routes } from "../navigation/routes";
-import type { FortuState } from "./types";
+import type { FortuState, LessonProgress } from "./types";
+
+const EMPTY_LESSON: LessonProgress = { sectionIdx: 0, choices: {}, texts: {}, revealed: [], completedAt: null };
+
+export const lessonProgress = (s: FortuState, lessonId: string) => s.lessons[lessonId] ?? EMPTY_LESSON;
+export const isLessonDone = (s: FortuState, lessonId: string) => !!s.lessons[lessonId]?.completedAt;
+export const isLessonStarted = (s: FortuState, lessonId: string) => !!s.lessons[lessonId];
 
 export const isSelfDone = (s: FortuState) => !!s.self.completedAt;
 export const isAbcDone = (s: FortuState) => !!s.abc.completedAt;
@@ -19,7 +25,7 @@ export function stepsDone(s: FortuState, topic: Topic): number {
     if (!isSelfDone(s)) return 0;
     return isAbcDone(s) ? 2 : 1;
   }
-  return s.topics[topic.id]?.stepsDone ?? 0;
+  return topic.steps.filter((step) => isLessonDone(s, step.id)).length;
 }
 
 /** Topic 1 complete only when BOTH self-awareness and ABC are complete. */

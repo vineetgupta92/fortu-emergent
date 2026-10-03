@@ -17,6 +17,8 @@ export const routes = {
   abcPack: (p: number) => `/abc/pack/${p}`,
   abcQ: (i: number) => `/abc/q/${i}`,
   abcDone: (from: From = "flow") => (from === "journey" ? "/abc/done?from=journey" : "/abc/done"),
+  lesson: (step: string) => `/lesson/${step}`,
+  lessonSection: (step: string, s: number) => `/lesson/${step}/${s}`,
   journey: "/journey",
   topic: (id: string) => `/topic/${id}`,
   dictionary: "/dictionary",

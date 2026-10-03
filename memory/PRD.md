@@ -26,8 +26,16 @@ Build **Fortu**, an Estonian-language, mobile-first financial-literacy learning 
 - Persistence across reloads, accessibility (radio roles, verdict SR text, focus on new screen, step labels), Android hardware back
 - Tested end-to-end by testing agent: all flows pass
 
+## Teema 1 "Raha psühholoogia" lessons (2026-06)
+- Lesson engine: `src/content/lessons/` (typed data per lesson, registry, helpers), `src/components/lesson/` (Blocks, Inputs, Sections), routes `app/lesson/[step]/index.tsx` (dark opening) + `app/lesson/[step]/[s].tsx` (section flow)
+- Steps 1.1–1.5 built from the supplied .docx files: Raha ja mina, Raha ja tunded, Raha ja uskumused, Raha ja valikud, Eesmärkide ABC
+- Section kinds: text, profile (no right answer → peegeldus by dominant a–d), quiz (right/wrong like ABC), sort (tap-to-sort chips instead of drag & drop), write (free text, device-local), pick (500 € choice → value feedback), generator (SMART sentence), summary (dark + teaser)
+- Progress: `state.lessons[stepId]` {sectionIdx, choices, texts, revealed, completedAt}; topic step count derives from completed lessons; `state.topics` removed
+- Praise lines from the source ("Väga tubli!", "Tubli!") rewritten to descriptive copy; "Homme" → "Järgmises sammus" (no daily scheduling in app)
+- Keyboard: ScreenShell gained `keyboard` prop (KeyboardAwareScrollView) for write/generator sections
+
 ## Backlog
-- P0: Lesson content for topics 2–5 (register in `lessonRoutes`) once supplied
+- P0: Lesson content for Teema 1 steps 6–7 ("Minu miks ja tulevikupilt", "Kokkuvõte") and topics 2–5
 - P1: Real Google/Apple OAuth; server-backed ProgressRepository; approved error/offline copy
 - P1: Product decisions: days-with-Fortu meaning (Q1), redo self-awareness (Q2), is "Rahatarkuse algus" a topic (Q8)
 - P2: Real mascot illustration (raccoon in green hoodie); Profile content

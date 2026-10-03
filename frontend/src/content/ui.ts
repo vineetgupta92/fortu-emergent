@@ -3,8 +3,16 @@
 
 const ofWord: Record<number, string> = {
   2: "kahest",
+  3: "kolmest",
+  4: "neljast",
   5: "viiest",
+  6: "kuuest",
   7: "seitsmest",
+  8: "kaheksast",
+  9: "üheksast",
+  10: "kümnest",
+  11: "üheteistkümnest",
+  12: "kaheteistkümnest",
   15: "viieteistkümnest",
 };
 const of = (n: number) => ofWord[n] ?? `${n}-st`;
@@ -46,4 +54,20 @@ export const ui = {
   stepPrefix: (n: number) => `${n}. samm`,
   questionProgress: (i: number) => `Küsimus ${i} ${of(5)}`,
   conceptProgress: (i: number) => `Mõiste ${i} ${of(15)}`,
+  lesson: {
+    start: "Alusta",
+    continue: "Jätka",
+    check: "Kontrolli",
+    reflection: "Vaata peegeldust",
+    feedback: "Vaata tagasisidet",
+    finish: "Päev lõpetatud!",
+    done: "Samm läbitud",
+    agendaTitle: "Mis sind ootab?",
+    sectionProgress: (i: number, n: number) => `Osa ${i} ${of(n)}`,
+    questionOf: (i: number, n: number) => `Küsimus ${i} ${of(n)}`,
+    statementOf: (i: number, n: number) => `Väide ${i} ${of(n)}`,
+    savedLocally: "Sinu vastused salvestuvad ainult sinu seadmesse.",
+    yourGoal: "Sinu eesmärk",
+    yourChoice: (category: string) => `Sinu valik: ${category}`,
+  },
 };

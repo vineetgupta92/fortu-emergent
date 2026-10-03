@@ -7,6 +7,18 @@ export type FortuUser = {
   lastSeenAt: string;
 };
 
+export type LessonProgress = {
+  /** Last visited section index — used to resume the lesson */
+  sectionIdx: number;
+  /** Option indexes keyed by `sectionId.itemId` */
+  choices: Record<string, number>;
+  /** Free-text answers keyed by `sectionId.fieldId` */
+  texts: Record<string, string>;
+  /** Sections whose feedback/reflection has been revealed */
+  revealed: string[];
+  completedAt: string | null;
+};
+
 export type FortuState = {
   version: 1;
   user: FortuUser | null;
@@ -25,8 +37,8 @@ export type FortuState = {
     score: number | null; // 0–15
     completedAt: string | null;
   };
-  /** Progress for topics after the start topic (t2Done etc.), keyed by stable topic id */
-  topics: Record<string, { stepsDone: number; completedAt: string | null }>;
+  /** Lesson progress for topic steps after the start topic, keyed by stable step id */
+  lessons: Record<string, LessonProgress>;
   /** Recorded only; what "Päevi koos Fortuga" means is undecided (see config.ts) */
   activeDays: string[];
 };

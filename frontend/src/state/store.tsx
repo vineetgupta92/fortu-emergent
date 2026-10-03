@@ -2,7 +2,7 @@ import { createContext, ReactNode, useContext, useEffect, useMemo, useState } fr
 
 import { abcConcepts, ABC_CORRECT_INDEX, selfQuestions } from "../content";
 import { progressRepository } from "../services/persistence";
-import type { FortuState, FortuUser } from "./types";
+import type { FortuState, FortuUser, LessonProgress } from "./types";
 
 const today = () => new Date().toISOString().slice(0, 10);
 const now = () => new Date().toISOString();
@@ -19,9 +19,23 @@ export const initialState: FortuState = {
     score: null,
     completedAt: null,
   },
-  topics: {},
+  lessons: {},
   activeDays: [],
 };
+
+const emptyLesson = (): LessonProgress => ({
+  sectionIdx: 0,
+  choices: {},
+  texts: {},
+  revealed: [],
+  completedAt: null,
+});
+
+/** Updates one lesson's progress, creating it on first touch. */
+function withLesson(s: FortuState, id: string, patch: (p: LessonProgress) => LessonProgress): FortuState {
+  const current = s.lessons[id] ?? emptyLesson();
+  return { ...s, lessons: { ...s.lessons, [id]: patch(current) } };
+}
 
 function merge(saved: FortuState): FortuState {
   return {
@@ -29,7 +43,7 @@ function merge(saved: FortuState): FortuState {
     ...saved,
     self: { ...initialState.self, ...saved.self },
     abc: { ...initialState.abc, ...saved.abc },
-    topics: saved.topics ?? {},
+    lessons: saved.lessons ?? {},
     activeDays: saved.user ? addDay(saved.activeDays ?? []) : saved.activeDays ?? [],
   };
 }
@@ -43,6 +57,11 @@ type Actions = {
   checkAbc: (i: number) => void;
   setAbcIdx: (i: number) => void;
   completeAbc: () => void;
+  setLessonSection: (lessonId: string, sectionIdx: number) => void;
+  setLessonChoice: (lessonId: string, key: string, value: number) => void;
+  setLessonText: (lessonId: string, key: string, value: string) => void;
+  revealLessonSection: (lessonId: string, sectionId: string) => void;
+  completeLesson: (lessonId: string) => void;
   /** Session-only (memory): where the dictionary returns to */
   setDictFrom: (href: string) => void;
   resetAll: () => void;
@@ -116,6 +135,24 @@ export function FortuProvider({ children }: { children: ReactNode }) {
             completedAt: s.abc.completedAt ?? now(),
           },
         })),
+      setLessonSection: (lessonId, sectionIdx) =>
+        setState((s) =>
+          s.lessons[lessonId]?.sectionIdx === sectionIdx
+            ? s
+            : withLesson(s, lessonId, (p) => ({ ...p, sectionIdx })),
+        ),
+      setLessonChoice: (lessonId, key, value) =>
+        setState((s) => withLesson(s, lessonId, (p) => ({ ...p, choices: { ...p.choices, [key]: value } }))),
+      setLessonText: (lessonId, key, value) =>
+        setState((s) => withLesson(s, lessonId, (p) => ({ ...p, texts: { ...p.texts, [key]: value } }))),
+      revealLessonSection: (lessonId, sectionId) =>
+        setState((s) =>
+          s.lessons[lessonId]?.revealed.includes(sectionId)
+            ? s
+            : withLesson(s, lessonId, (p) => ({ ...p, revealed: [...p.revealed, sectionId] })),
+        ),
+      completeLesson: (lessonId) =>
+        setState((s) => withLesson(s, lessonId, (p) => ({ ...p, completedAt: p.completedAt ?? now() }))),
       setDictFrom: (href) => setDictFromState(href),
       resetAll: () => {
         setState(initialState);
