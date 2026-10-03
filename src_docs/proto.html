@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fortu prototüüp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#12332C;
+  --glow:#1E4A3F;
+  --deep-low:#0A211C;
+  --surface:#F1F7F4;
+  --border:#E2EBE6;
+  --text:#16211E;
+  --secondary:#5A6B63;
+  --mint:#9BE3B8;
+  --mint-text:#0A2620;
+  --gold:#E8C46A;
+  --pink:#F5B8D0;
+  --pink-dark:#B03A6A;
+  --ok:#1B5E2A; --ok-bg:#E4F2E6;
+  --no:#B3261E; --no-bg:#FBEAE7;
+  --on-deep-dim:#A9BFB4;
+  --result:#A16207;
+  --result-bg:#FBF3E0;
+  --result-text:#7A4A05;
+  --r-card:24px; --r-btn:18px; --r-input:16px;
+  --shadow:0 6px 20px rgba(18,51,44,.07);
+  --s1:16px; --s2:24px; --s3:32px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;min-height:100dvh;padding:24px;
+}
+.device{
+  width:390px;height:844px;max-height:calc(100dvh - 48px);
+  background:#fff;border:1px solid var(--border);border-radius:40px;
+  box-shadow:var(--shadow);overflow:hidden;
+  display:flex;flex-direction:column;position:relative;
+}
+@media (max-width:520px){
+  body{padding:0;background:#fff}
+  .device{width:100%;height:100dvh;max-height:none;border:0;border-radius:0;box-shadow:none}
+}
+.appbar{
+  flex:0 0 auto;display:flex;align-items:center;gap:10px;
+  padding:calc(14px + env(safe-area-inset-top)) var(--s2) 14px;
+  background:var(--primary);
+}
+.appbar svg{width:20px;height:20px;color:#fff;stroke-width:1.75;flex:0 0 20px}
+.appbar span{font-size:16px;font-weight:600;color:#fff;letter-spacing:0}
+.appbar.is-hidden{display:none}
+.appbar .back{
+  background:none;border:0;padding:0;margin:0;display:none;
+  align-items:center;justify-content:center;cursor:pointer;color:#fff;flex:0 0 24px;
+}
+.appbar .back svg{width:24px;height:24px;stroke-width:2}
+.appbar .back:focus-visible{outline:2px solid #fff;outline-offset:2px;border-radius:8px}
+.appbar .headprog{display:none;flex:1;height:5px;background:rgba(255,255,255,.25);border-radius:3px;overflow:hidden}
+.appbar .headprog i{display:block;height:100%;width:0;background:#fff;border-radius:3px;transition:width .3s ease}
+.appbar.is-empty .leaf,.appbar.is-empty #appbar-title{display:none}
+.appbar.has-back .back{display:flex}
+.appbar.is-flow{flex-wrap:wrap}
+.appbar.is-flow .back{display:flex}
+.appbar.is-flow .headprog{display:block;flex:0 0 100%;margin-top:12px}
+
+.screen{flex:1;flex-direction:column;min-height:0;display:none}
+.screen:focus{outline:none}
+.screen.is-active{display:flex}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 var(--s2)}
+
+.h1{font-size:28px;font-weight:700;line-height:1.3}
+.h2{font-size:20px;font-weight:600;line-height:1.4}
+.body{font-size:16px;font-weight:400;line-height:1.6}
+.muted{color:var(--secondary)}
+.small{font-size:14px;line-height:1.6;color:var(--secondary)}
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:1.5px;color:var(--secondary);margin-bottom:20px;text-align:center}
+
+.mascot{
+  border-radius:50%;background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--primary);font-size:15px;font-weight:600;
+  text-align:center;line-height:1.4;margin:0 auto;flex:0 0 auto;
+}
+.icon-circle{
+  width:104px;height:104px;border-radius:50%;background:var(--surface);
+  display:flex;align-items:center;justify-content:center;margin:0 auto var(--s2);
+}
+
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:100%;padding:16px;border:0;border-radius:var(--r-btn);
+  font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;
+  transition:background-color .15s ease,color .15s ease,transform .1s ease;
+}
+.btn:active{transform:scale(.985)}
+.btn:disabled{cursor:default}
+.btn:disabled:active{transform:none}
+.btn svg{width:20px;height:20px;flex:0 0 20px}
+.btn:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.btn-primary{background:var(--mint);color:var(--mint-text)}
+.btn-primary:hover{background:#8ADCAE}
+.btn-primary.is-off{background:var(--border);color:var(--secondary)}
+.btn-social{background:#fff;color:var(--text);border:1px solid var(--border)}
+.btn-social:hover{background:var(--surface)}
+.link-btn{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;padding:12px;background:none;border:0;border-radius:var(--r-btn);
+  font-family:inherit;font-size:16px;font-weight:600;color:var(--primary);cursor:pointer;
+}
+.link-btn:hover{background:var(--surface)}
+.link-btn svg{width:18px;height:18px}
+.stack>*+*{margin-top:var(--s1)}
+.cta-bar{flex:0 0 auto;padding:var(--s1) var(--s2);background:#fff;border-top:1px solid var(--border)}
+.cta-bar .btn+.btn,.cta-bar .btn+.link-btn{margin-top:8px}
+.cta-note{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px}
+.cta-note svg{width:16px;height:16px;color:var(--secondary);flex:0 0 16px}
+
+.nav{flex:0 0 auto;display:flex;padding:14px 0 max(18px,env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--border)}
+.nav button{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:none;border:0;padding:6px 0;color:var(--secondary);cursor:pointer;transition:color .15s ease;
+}
+.nav button svg{width:26px;height:26px}
+.nav button:hover{color:var(--text)}
+.nav button .pip{width:5px;height:5px;border-radius:50%;background:transparent}
+.nav button.is-active{color:var(--primary)}
+.nav button.is-active .pip{background:var(--primary)}
+.nav button:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:12px}
+
+.rule{width:40px;height:3px;background:var(--primary);border-radius:2px}
+.row{display:flex;gap:var(--s1);padding:var(--s2) 0;border-top:1px solid var(--border)}
+.row:first-of-type{border-top:0}
+.row-icon{flex:0 0 48px;height:48px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center}
+.row-icon svg{width:22px;height:22px;color:var(--primary)}
+.row-title{font-size:16px;font-weight:600;margin-bottom:6px}
+.quote{background:var(--surface);border-radius:var(--r-card);padding:var(--s2);display:flex;align-items:flex-end;gap:var(--s1)}
+.quote svg{width:20px;height:20px;color:var(--primary)}
+
+.progress{display:flex;align-items:center;gap:12px}
+.progress-track{flex:1;display:flex;align-items:center}
+.progress .dot{width:10px;height:10px;border-radius:50%;background:var(--border);flex:0 0 10px}
+.progress .dot.is-done{background:var(--primary)}
+.progress .dot.is-current{width:14px;height:14px;flex:0 0 14px;background:#fff;box-shadow:inset 0 0 0 3px var(--primary)}
+.progress .bar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.progress .bar i{display:block;width:0;height:100%;background:var(--primary);transition:width .3s ease}
+.progress-count{font-size:14px;font-weight:600;color:var(--secondary)}
+
+.opt{
+  display:flex;align-items:center;gap:14px;width:100%;
+  border:1px solid var(--border);border-radius:var(--r-input);
+  padding:16px;background:#fff;font-family:inherit;font-size:16px;
+  color:var(--text);text-align:left;cursor:pointer;
+  transition:border-color .15s ease,background-color .15s ease;
+}
+.opt+.opt{margin-top:var(--s1)}
+.opt:hover{background:var(--surface)}
+.opt:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.opt .mark{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);flex:0 0 22px}
+.opt.is-picked{border:1.5px solid var(--primary);background:var(--surface)}
+.opt.is-picked .mark{border-color:var(--primary);background:var(--primary);box-shadow:inset 0 0 0 3px var(--surface)}
+.opt.is-ok{border:1.5px solid var(--ok);background:var(--ok-bg)}
+.opt.is-ok .mark{border-color:var(--ok);background:var(--ok);box-shadow:inset 0 0 0 3px var(--ok-bg)}
+.opt.is-no{border:1.5px solid var(--no);background:var(--no-bg)}
+.opt.is-no .mark{border-color:var(--no);background:var(--no);box-shadow:inset 0 0 0 3px var(--no-bg)}
+.opt.is-dim{opacity:.45}
+.opt .verdict{margin-left:auto;width:20px;height:20px;flex:0 0 20px}
+.opt.is-ok .verdict{color:var(--ok)}
+.opt.is-no .verdict{color:var(--no)}
+.sr-intro{background:var(--surface);border-radius:var(--r-card);padding:18px 20px;margin-top:var(--s2)}
+.sr-intro p{font-size:15px;line-height:1.55;color:var(--secondary)}
+.sr-group{font-size:13px;font-weight:600;letter-spacing:1.4px;color:var(--secondary);margin:var(--s3) 0 var(--s1)}
+.sr-group:first-child{margin-top:var(--s2)}
+.sr-item{padding:var(--s1) 0;border-top:1px solid var(--border)}
+.sr-item:first-of-type{border-top:0}
+.sr-item .w{font-size:16px;font-weight:600;color:var(--text);margin-bottom:5px}
+.sr-item .d{font-size:15px;line-height:1.55;color:var(--secondary)}
+#toast{
+  position:absolute;left:50%;top:74px;transform:translate(-50%,-8px);
+  background:var(--primary);color:#fff;font-size:14px;font-weight:500;
+  padding:11px 18px;border-radius:999px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;z-index:20;
+}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.abc-num{font-size:44px;font-weight:700;color:var(--gold);line-height:1.15;margin-bottom:6px}
+.abc-unit{font-size:15px;color:var(--on-deep-dim)}
+
+.tip{display:none;gap:12px;align-items:flex-start;background:var(--surface);border-radius:var(--r-card);padding:20px;margin-top:var(--s2)}
+.tip.is-shown{display:flex;animation:fin .22s ease-out}
+.tip svg{width:22px;height:22px;color:var(--primary);flex:0 0 22px}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* --- sõnumileht: Fortu räägib --- */
+.device.is-deep{
+  background:radial-gradient(120% 62% at 50% 0%,var(--glow) 0%,var(--primary) 45%,var(--deep-low) 100%);
+}
+.device.is-deep .appbar{background:transparent}
+.screen.is-deep{color:#fff}
+#screen-tip.is-deep .scroll,#screen-intro.is-deep .scroll,#screen-abcintro.is-deep .scroll,#screen-abcpack.is-deep .scroll,#screen-abcdone.is-deep .scroll{display:flex;flex-direction:column;justify-content:center}
+.screen.is-deep .mascot{background:rgba(255,255,255,.20);color:#fff}
+.screen.is-deep .btn-social{background:rgba(255,255,255,.07);color:#fff;border-color:rgba(255,255,255,.22)}
+.screen.is-deep .btn-social:hover{background:rgba(255,255,255,.13)}
+.screen.is-deep .link-btn{color:var(--mint)}
+.screen.is-deep .link-btn:hover{background:rgba(255,255,255,.07)}
+.screen.is-deep .small{color:var(--on-deep-dim)}
+.screen.is-deep .nav{background:transparent;border-top-color:rgba(255,255,255,.16)}
+.screen.is-deep .nav button{color:var(--on-deep-dim)}
+.screen.is-deep .nav button.is-active{color:var(--mint)}
+.screen.is-deep .nav button.is-active .pip{background:var(--mint)}
+.screen.is-deep .cta-bar{background:transparent;border-top:1px solid rgba(255,255,255,.16)}
+.screen.is-deep .icon-circle{background:rgba(255,255,255,.10)}
+.screen.is-deep .icon-circle svg{stroke:var(--mint)}
+.screen.is-deep .num{color:var(--gold)}
+.screen.is-deep .badge{background:rgba(232,196,106,.12);color:var(--gold)}
+.screen.is-deep .muted{color:var(--on-deep-dim)}
+.screen.is-deep .summary-toggle{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.22);color:#fff}
+.screen.is-deep .summary-toggle:hover{background:rgba(255,255,255,.12)}
+.screen.is-deep .sum-card{background:rgba(255,255,255,.07)}
+.screen.is-deep .sum-row{border-top-color:rgba(255,255,255,.16)}
+.screen.is-deep .sum-topic{color:var(--on-deep-dim)}
+.screen.is-deep .sum-answer{color:#fff}
+.screen.is-deep .bubble{background:rgba(255,255,255,.07)}
+.screen.is-deep .bubble span{color:var(--mint)}
+.screen.is-deep .bubble svg{stroke:var(--pink)}
+.deep-kick{font-size:11px;letter-spacing:1.5px;font-weight:600;color:var(--gold);margin-bottom:14px}
+.deep-big{font-family:Fraunces,Georgia,serif;font-size:26px;line-height:1.28;color:#fff}
+.deep-big em{font-style:italic;color:var(--gold)}
+.deep-sm{font-size:15px;line-height:1.6;color:var(--on-deep-dim);margin-top:14px}
+/* Fortu kõne: serif tähendab, et Fortu räägib */
+.say{font-family:Fraunces,Georgia,serif;font-size:19px;line-height:1.45;color:var(--text)}
+.say em{font-style:italic;color:var(--result-text)}
+.screen.is-deep .say{color:#fff}
+.screen.is-deep .say em{color:var(--gold)}
+.deep-cta{display:flex;justify-content:flex-end;margin-top:var(--s3)}
+.btn-pill{
+  width:auto;padding:15px 40px;border:0;border-radius:999px;
+  font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;
+  background:var(--mint);color:var(--mint-text);
+  transition:background-color .15s ease,transform .1s ease;
+}
+.btn-pill:hover{background:#8ADCAE}
+.btn-pill:active{transform:scale(.97)}
+.btn-pill:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.screen.is-deep .btn-pill:focus-visible{outline-color:#fff}
+.btn-pill.is-off{background:var(--border);color:var(--secondary);cursor:default}
+.btn-pill.is-off:hover{background:var(--border)}
+.screen.is-deep .btn-pill.is-off{background:rgba(255,255,255,.14);color:var(--on-deep-dim)}
+.cta-stack{display:flex;flex-direction:column;align-items:flex-end;gap:10px;margin-top:var(--s3);padding-bottom:var(--s3)}
+.cta-stack .link-btn{width:auto;padding:10px 0}
+.cta-end{display:flex;justify-content:flex-end;margin-top:var(--s3);padding-bottom:var(--s3)}
+
+.illus{background:var(--surface);border-radius:var(--r-card);padding:20px;margin:var(--s2) 0}
+.illus svg{width:100%;height:auto;display:block}
+
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--result-bg);color:var(--result-text);font-size:14px;font-weight:600;letter-spacing:1px;padding:8px 20px;border-radius:999px}
+/* --- kodu, naasev kasutaja --- */
+.hcard{background:var(--surface);border-radius:20px;padding:16px}
+.screen.is-deep .hcard{background:rgba(255,255,255,.07)}
+.hcard .t{font-size:15px;font-weight:600;margin-bottom:8px}
+.hcard .meta{font-size:13px;color:var(--secondary);margin-bottom:12px}
+.screen.is-deep .hcard .meta{color:var(--on-deep-dim)}
+.hcard .meta b{color:var(--primary);font-weight:600}
+.screen.is-deep .hcard .meta b{color:var(--mint)}
+.hrow{display:flex;align-items:center;gap:12px}
+.htrack{flex:1;height:6px;background:var(--border);border-radius:4px;overflow:hidden}
+.screen.is-deep .htrack{background:rgba(255,255,255,.16)}
+.htrack i{display:block;height:100%;background:var(--primary);border-radius:4px}
+.screen.is-deep .htrack i{background:var(--mint)}
+.hcnt{font-size:13px;font-weight:600;color:var(--secondary);white-space:nowrap}
+.screen.is-deep .hcnt{color:var(--on-deep-dim)}
+.hgo{width:40px;height:40px;border-radius:50%;background:var(--mint);display:flex;align-items:center;justify-content:center;flex:0 0 40px;border:0;cursor:pointer}
+.hgo svg{width:19px;height:19px;color:var(--mint-text);stroke-width:2.2}
+.hduo{display:flex;gap:10px;margin-top:12px}
+.hduo .hcard{flex:1;text-align:center;padding:14px 10px}
+.hduo .lbl{font-size:12px;color:var(--secondary);margin-bottom:6px}
+.screen.is-deep .hduo .lbl{color:var(--on-deep-dim)}
+.hduo .big{font-size:26px;font-weight:700;line-height:1.1}
+.hduo .unit{font-size:11px;color:var(--secondary);margin-top:3px}
+.screen.is-deep .hduo .unit{color:var(--on-deep-dim)}
+.hsay{font-family:Fraunces,Georgia,serif;font-size:16px;line-height:1.45;color:var(--result-text);text-align:center;margin-top:var(--s2);padding-bottom:var(--s2)}
+.screen.is-deep .hsay{color:var(--gold)}
+
+.heart{width:30px;height:30px;color:var(--pink-dark);margin-bottom:14px}
+.screen.is-deep .heart{color:var(--pink)}
+.num{font-size:40px;font-weight:700;color:var(--result);line-height:1.2;margin-bottom:var(--s1)}
+
+.summary-toggle{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:#fff;border:1px solid var(--border);border-radius:var(--r-input);
+  padding:16px;font-family:inherit;font-size:16px;font-weight:600;color:var(--primary);cursor:pointer;
+}
+.summary-toggle:hover{background:var(--surface)}
+.summary-toggle svg{width:20px;height:20px;transition:transform .2s ease}
+.sum-card{background:var(--surface);border-radius:var(--r-card);padding:20px}
+.bubble{background:var(--surface);border-radius:var(--r-card);border-bottom-right-radius:6px;padding:16px 20px;display:flex;align-items:center;gap:10px}
+.bubble span{font-size:16px;font-weight:600;color:var(--primary);line-height:1.5}
+.bubble svg{color:var(--primary)}
+.sum-row{padding:var(--s1) 0;border-top:1px solid var(--border)}
+.sum-row:first-child{padding-top:0;border-top:0}
+.sum-row:last-child{padding-bottom:0}
+.sum-topic{font-size:14px;color:var(--secondary);line-height:1.5;margin-bottom:6px}
+.sum-answer{font-size:16px;color:var(--text);line-height:1.5}
+
+.done-row{
+  display:flex;align-items:center;gap:12px;width:100%;
+  background:var(--surface);border:0;border-radius:var(--r-card);
+  padding:16px 20px;margin-bottom:var(--s2);
+  font-family:inherit;text-align:left;cursor:pointer;
+}
+.done-row:hover{background:#E7F1EC}
+.done-row svg{width:22px;height:22px;color:var(--primary);flex:0 0 22px}
+.done-row span{font-size:16px;font-weight:600;color:var(--text);flex:1}
+.done-row .go{color:var(--primary)}
+
+.page-lead{font-size:28px;font-weight:700;line-height:1.3;margin-bottom:var(--s2)}
+.theme-open{border:1.5px solid var(--primary);border-radius:var(--r-card);overflow:hidden;margin-bottom:var(--s1)}
+.theme-head{width:100%;background:#fff;border:0;padding:20px;text-align:left;font-family:inherit;cursor:pointer}
+.theme-head:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+.theme-head .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.theme-head .name{font-size:16px;font-weight:600;color:var(--text)}
+.theme-head .desc{font-size:16px;color:var(--secondary);line-height:1.6;margin-bottom:var(--s1)}
+.theme-head svg{width:20px;height:20px;color:var(--primary);flex:0 0 20px}
+.theme-head .chev{display:flex;flex:0 0 20px;transition:transform .2s ease}
+.theme-meter{display:flex;align-items:center;gap:12px}
+.theme-meter .pips{flex:1;display:flex;align-items:center}
+.theme-meter .pip-dot{width:8px;height:8px;border-radius:50%;background:var(--border);flex:0 0 8px}
+.theme-meter .pip-dot.is-done{background:var(--primary)}
+.theme-meter .pip-dot.is-now{width:12px;height:12px;flex:0 0 12px;background:#fff;box-shadow:inset 0 0 0 2.5px var(--primary)}
+.theme-meter .pip-bar{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.theme-meter .pip-bar i{display:block;height:100%;background:var(--primary)}
+.theme-meter .count{font-size:14px;font-weight:600;color:var(--secondary)}
+
+.days{padding:4px 12px 12px}
+.day-row{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border-radius:var(--r-input);background:none;border:0;font-family:inherit;text-align:left;cursor:pointer}
+.day-row:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+.day-row .name{font-size:16px;color:var(--text);flex:1}
+.day-row svg{width:22px;height:22px;flex:0 0 22px}
+.day-row svg.topic{color:var(--secondary)}
+.day-row svg:last-child{color:var(--border)}
+.day-row.is-done svg{color:var(--primary)}
+.day-row.is-now{background:var(--surface)}
+.day-row.is-now svg{color:var(--primary)}
+.day-row.is-now .name{font-weight:600}
+.day-row.is-next .name{color:var(--secondary)}
+
+.theme-locked{width:100%;text-align:left;font-family:inherit;background:var(--surface);border:0;border-radius:var(--r-card);padding:20px;margin-bottom:var(--s1);cursor:pointer}
+.theme-locked:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.theme-locked .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.theme-locked .name{font-size:16px;font-weight:600;color:var(--secondary)}
+.theme-locked .desc{font-size:16px;color:var(--secondary);line-height:1.6}
+.theme-locked svg{width:20px;height:20px;color:var(--secondary);flex:0 0 20px}
+.theme-locked .why{font-size:14px;color:var(--secondary);margin-top:12px;display:none}
+.theme-locked.is-told .why{display:block}
+
+.plan-row{display:flex;align-items:center;gap:16px;padding:12px 0}
+.plan-row svg{width:24px;height:24px;color:var(--primary);flex:0 0 24px}
+.plan-row span{font-size:16px;color:var(--text)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="device">
+
+<p id="toast" role="status" aria-live="polite"></p>
+<header class="appbar">
+  <button class="back" id="appbar-back" aria-label="Tagasi">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+  </button>
+  <svg class="leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21c.5-4.5 2.5-8 7-10"/><path d="M9 18c6.218 0 10.5-3.288 11-12-5.5.5-10.328 1.5-12.5 5-1.5 2.5-.5 5.5 1.5 7z"/></svg>
+  <span id="appbar-title">FORTU</span>
+  <span class="headprog" id="appbar-prog" role="progressbar" aria-valuemin="0" aria-valuemax="5"><i></i></span>
+</header>
+
+<section class="screen is-deep is-active" id="screen-login" aria-label="Sisselogimine">
+  <div class="scroll" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="mascot" style="width:176px;height:176px;margin-top:var(--s3)">maskott<br>FORTU</div>
+    <div style="text-align:center;padding:var(--s3) 0">
+      <h1 class="h1" style="margin-bottom:var(--s1)">Rahatarkus algab sinust</h1>
+      <p class="body" style="color:var(--mint)">Väikeste sammudega suurema kindlustundeni.</p>
+    </div>
+    <div class="stack">
+      <button class="btn btn-social" data-go="home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.945 11a9 9 0 1 1-3.284-5.997l-2.655 2.392A5.5 5.5 0 1 0 17.125 13H13v-2z"/></svg>
+        Jätka Google'iga
+      </button>
+      <button class="btn btn-social" data-go="home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5c-1.5-2-4-2.5-5.5-1.5-2 1.3-2.6 4.6-1.4 8.2 1 3 2.9 6.3 4.6 6.3 1.1 0 1.6-.7 2.3-.7s1.2.7 2.3.7c1.7 0 3.6-3.3 4.6-6.3.6-1.8.7-3.5.3-4.9"/><path d="M12 5.5c0-2 1.6-3.5 3.5-3.5"/></svg>
+        Jätka Apple'iga
+      </button>
+    </div>
+    <p class="small" style="text-align:center;padding:var(--s3) 0">
+      Jätkates nõustud <b style="color:var(--gold)">kasutustingimuste</b> ja <b style="color:var(--gold)">privaatsuspoliitikaga</b>
+    </p>
+  </div>
+</section>
+
+<section class="screen is-deep" id="screen-home" aria-label="Kodu">
+  <div class="scroll">
+    <div id="home-body"></div>
+  </div>
+  <div class="cta-bar" id="home-cta">
+    <button class="btn btn-primary" data-go="day0">Alusta</button>
+    <button class="link-btn" data-go="why">
+      Vaata, kuidas see töötab
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+    </button>
+  </div>
+  <nav class="nav" aria-label="Peamenüü"></nav>
+</section>
+
+<section class="screen" id="screen-why" aria-label="Miks valida Fortu">
+  <div class="scroll">
+    <div style="padding-top:var(--s3)">
+      <div class="row">
+        <div class="row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19a9 9 0 0 1 9 0 9 9 0 0 1 9 0"/><path d="M3 6a9 9 0 0 1 9 0 9 9 0 0 1 9 0"/><path d="M3 6v13M12 6v13M21 6v13"/></svg></div>
+        <div><p class="row-title">Praktiline teadmine</p><p class="body muted">Lihtsad selgitused ja harjutused, mida saad kohe ellu rakendada.</p></div>
+      </div>
+      <div class="row">
+        <div class="row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
+        <div><p class="row-title">Samm-sammuline teekond</p><p class="body muted">7 sammu eneseavastust, seejärel praktilised oskused igapäevaseks raha juhtimiseks.</p></div>
+      </div>
+      <div class="row">
+        <div class="row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+        <div><p class="row-title">Harjumused, mis püsivad</p><p class="body muted">Väikesed sammud, mis toovad pikaajalisi tulemusi.</p></div>
+      </div>
+      <div class="row">
+        <div class="row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <div><p class="row-title">Turvaline ja privaatne</p><p class="body muted">Sinu andmed on kaitstud ja säilivad ainult sinu jaoks.</p></div>
+      </div>
+      <div class="row" style="padding-bottom:var(--s3)">
+        <div class="row-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12.6 12 20l-7.5-7.4a5 5 0 1 1 7.5-6.6 5 5 0 1 1 7.5 6.6z"/></svg></div>
+        <div><p class="row-title">Toetav sõber sinu kõrval</p><p class="body muted">Fortu on alati olemas, et sind motiveerida ja juhendada.</p></div>
+      </div>
+    </div>
+    <div style="height:var(--s2)"></div>
+  </div>
+  <div class="cta-bar"><button class="btn btn-primary" data-go="day0">Alusta</button></div>
+  <nav class="nav" aria-label="Peamenüü"></nav>
+</section>
+
+<section class="screen" id="screen-day0" aria-label="Eneseteadlikkus">
+  <div class="scroll">
+    <div style="padding-top:var(--s3)">
+      <h1 class="h1" style="margin-bottom:var(--s2)">Kutsun sind oma rahatarkuse teekonnale</h1>
+      <p class="say" style="margin-bottom:var(--s2)">Enne kui hakkame koos uusi teadmisi koguma, vaatame, <em>mis on sinu lähtepunkt.</em></p>
+      <p class="body muted" style="margin-bottom:var(--s1)">Edasi on vaja teadmisi, harjumusi ja süsteemi, mis hoiab järjepidevust.</p>
+      <p class="body muted">Pole vahet, kas alustad nullist või sul on juba mõned harjumused olemas.</p>
+    </div>
+    <div class="mascot" style="width:168px;height:168px;margin:var(--s3) auto">maskott<br>FORTU</div>
+  </div>
+  <div class="cta-bar"><button class="btn btn-primary" data-go="intro">Jätka</button></div>
+  <nav class="nav" data-active="route" aria-label="Peamenüü"></nav>
+</section>
+
+<section class="screen" id="screen-q" aria-label="Eneseteadlikkus">
+  <div class="scroll">
+    <div style="padding-top:var(--s3)">
+      <p class="h2" style="margin-bottom:8px" id="q-title"></p>
+      <p class="body muted" style="margin-bottom:var(--s2)" id="q-sub"></p>
+      <div role="radiogroup" id="q-opts" aria-labelledby="q-title"></div>
+    </div>
+    <div style="height:var(--s3)"></div>
+  </div>
+  <div class="cta-bar"><button class="btn btn-primary is-off" id="q-next">Jätka</button></div>
+  <nav class="nav" data-active="route" aria-label="Peamenüü"></nav>
+</section>
+
+<section class="screen is-deep" id="screen-intro" aria-label="Enne alustamist">
+  <div class="scroll">
+    <p class="deep-big">Kõigepealt vasta viiele küsimusele. Need aitavad sul näha, <em>kust sinu teekond algab.</em></p>
+    <p class="deep-sm">Siin ei ole õigeid vastuseid. Vasta nii, nagu praegu on.</p>
+  </div>
+  <div class="cta-bar"><button class="btn btn-primary" data-go="q">Jätka</button></div>
+</section>
+
+<section class="screen is-deep" id="screen-tip" aria-label="Vihje">
+  <div class="scroll">
+    <p class="deep-big" id="tip-big"></p>
+  </div>
+  <div class="cta-bar"><button class="btn btn-primary" id="tip-next">Jätka</button></div>
+</section>
+
+<section class="screen is-deep" id="screen-result" aria-label="Sinu tulemus">
+  <div class="scroll">
+    <div style="padding-top:var(--s3);text-align:center">
+      <div class="mascot" style="width:144px;height:144px;margin-bottom:var(--s2)">maskott<br>FORTU</div>
+      <svg class="heart" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.5 12.6 12 20l-7.5-7.4a5 5 0 1 1 7.5-6.6 5 5 0 1 1 7.5 6.6z"/></svg>
+      <p id="r-lead" class="say" style="font-size:23px;color:var(--gold)"></p>
+    </div>
+    <div style="padding-top:var(--s3)">
+      <button id="r-toggle" class="summary-toggle" aria-expanded="false" aria-controls="r-summary">
+        <span id="r-toggle-label">Vaata oma vastuseid</span>
+        <svg id="r-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div id="r-summary" hidden style="margin-top:var(--s1)">
+        <div class="sum-card" id="r-summary-body"></div>
+      </div>
+    </div>
+    <div style="padding-top:var(--s3)">
+      <p id="r-body" class="body muted"></p>
+    </div>
+    <div style="height:var(--s3)"></div>
+  </div>
+  <div class="cta-bar"><button class="btn btn-primary" data-go="abcintro">Jätka</button></div>
+  <nav class="nav" data-active="route" aria-label="Peamenüü"></nav>
+</section>
+
+<section class="screen is-deep" id="screen-abcintro" aria-label="Rahatarkuse ABC">
+  <div class="scroll">
+    <p class="deep-big">Nüüd tead, kust sa alustad. Enne esimest teemat vaatame üle mõned <em>rahatarkuse põhimõisted.</em></p>
+    <p class="deep-sm">Kui räägime sama keelt, on uusi teadmisi palju lihtsam omandada.</p>
+  </div>
+  <div class="cta-bar">
+    <button class="btn btn-primary" id="abc-start">Jätka</button>
+    <div class="cta-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+      <span class="small">15 mõistet, umbes viis minutit.</span>
+    </div>
+  </div>
+  <nav class="nav" data-active="route" aria-label="Peamenüü"></nav>
+</section>
+
+<section class="screen is-deep" id="screen-abcpack" aria-label="Rahatarkuse ABC">
+  <div class="scroll">
+    <p class="deep-kick" id="pack-kick"></p>
+    <p class="deep-big" id="pack-say"></p>
+  </div>
+  <div class="cta-bar"><button class="btn btn-primary" id="pack-next">Jätka</button></div>
+</section>
+
+<section class="screen" id="screen-abcq" aria-label="Rahatarkuse ABC">
+  <div class="scroll">
+    <div style="padding-top:var(--s3)">
+      <p class="h2" style="margin-bottom:8px" id="abc-title"></p>
+      <p class="body muted" style="margin-bottom:var(--s2)">Mida see mõiste tähendab?</p>
+      <div role="radiogroup" id="abc-opts" aria-labelledby="abc-title"></div>
+    </div>
+    <div style="height:var(--s3)"></div>
+  </div>
+  <div class="cta-bar"><button class="btn btn-primary is-off" id="abc-next">Kontrolli</button></div>
+  <nav class="nav" data-active="route" aria-label="Peamenüü"></nav>
+</section>
+
+<section class="screen is-deep" id="screen-abcdone" aria-label="Rahatarkuse ABC">
+  <div class="scroll" style="text-align:center">
+    <div class="mascot" style="width:132px;height:132px;margin-bottom:var(--s2)">maskott<br>FORTU</div>
+    <p class="abc-num" id="abc-score"></p>
+    <p class="abc-unit" style="margin-bottom:var(--s3)">õiget vastust viieteistkümnest</p>
+    <p class="say" style="font-size:22px;color:var(--gold);margin-bottom:var(--s2)">Nüüd räägime sama keelt.</p>
+    <p class="body" style="color:var(--on-deep-dim)">Need viisteist sõna tulevad edaspidi kogu aeg ette. Kui mõni ununeb, leiad need alati sõnaraamatust.</p>
+  </div>
+  <div class="cta-bar"><button class="btn btn-primary" data-go="theme">Jätka</button></div>
+  <nav class="nav" data-active="route" aria-label="Peamenüü"></nav>
+</section>
+
+
+<section class="screen" id="screen-sonaraamat" aria-label="Sõnaraamat">
+  <div class="scroll">
+    <div class="sr-intro">
+      <p>Siit leiad kõigi oluliste sõnade seletused. Nimekiri kasvab koos teekonnaga.</p>
+    </div>
+    <div id="sr-list"></div>
+    <div style="height:var(--s3)"></div>
+  </div>
+  <nav class="nav" data-active="dict" aria-label="Peamenüü"></nav>
+</section>
+
+<section class="screen" id="screen-teekond" aria-label="Sinu teekond">
+  <div class="scroll">
+    <div style="padding-top:var(--s3)">
+      <div id="tk-t1"></div>
+      <div id="tk-t2"></div>
+      <button class="theme-locked" data-lock><div class="top"><span class="name">Teema 2: Raha juhtimine</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><p class="desc">Kuidas jälgida kulusid ja luua eelarve.</p><p class="why">Avaneb, kui eelmine teema on läbitud.</p></button>
+      <button class="theme-locked" data-lock><div class="top"><span class="name">Teema 3: Rahaline turvalisus</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><p class="desc">Kuidas luua puhverkonto ja valmistuda ootamatusteks.</p><p class="why">Avaneb, kui eelmine teema on läbitud.</p></button>
+      <button class="theme-locked" data-lock><div class="top"><span class="name">Teema 4: Raha kasvamine</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><p class="desc">Kuidas investeerimine töötab ja mille põhjal otsuseid teha.</p><p class="why">Avaneb, kui eelmine teema on läbitud.</p></button>
+    </div>
+    <div style="height:var(--s3)"></div>
+  </div>
+  <nav class="nav" data-active="route" aria-label="Peamenüü"></nav>
+</section>
+
+<section class="screen" id="screen-theme" aria-label="Raha psühholoogia">
+  <div class="scroll">
+    <div style="padding-top:var(--s3)">
+      <p class="body muted">Nüüd, kui tead, kust alustad, on aeg pöörata pilk sissepoole.</p>
+    </div>
+    <div style="padding-top:var(--s3)" id="theme-plan"></div>
+    <div style="height:var(--s3)"></div>
+  </div>
+  <div class="cta-bar"><button class="btn btn-primary">Alusta</button></div>
+  <nav class="nav" data-active="route" aria-label="Peamenüü"></nav>
+</section>
+
+</div>
+
+<script>
+(function(){
+  var NAV=[
+    {id:'home',label:'Kodu',path:'<path d="M5 12H3l9-9 9 9h-2"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/><path d="M9 21v-6h6v6"/>'},
+    {id:'route',label:'Teekond',path:'<circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M12 19h4.5a3.5 3.5 0 0 0 0-7h-8a3.5 3.5 0 0 1 0-7H12"/>'},
+    {id:'dict',label:'Sõnaraamat',path:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H19v3H6.5A2.5 2.5 0 0 1 4 20.5z"/><path d="M8 7h7M8 10.5h5"/>'},
+    {id:'profile',label:'Profiil',path:'<circle cx="12" cy="8" r="4"/><path d="M6 21v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1"/>'}
+  ];
+  document.querySelectorAll('.nav').forEach(function(nav){
+    var act=nav.dataset.active||'home';
+    NAV.forEach(function(it){
+      var b=document.createElement('button');
+      b.setAttribute('aria-label',it.label);
+      b.dataset.tab=it.id;
+      if(it.id===act)b.classList.add('is-active');
+      b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+it.path+'</svg><span class="pip"></span>';
+      nav.appendChild(b);
+    });
+  });
+
+  var TITLES={
+    login:{t:''},
+    home:{t:''},
+    why:{t:'Miks valida Fortu'},
+    day0:{t:'Eneseteadlikkus'},
+    q:{t:'Eneseteadlikkus'},
+    intro:{t:'Eneseteadlikkus'},
+    abcintro:{t:'Rahatarkuse ABC'},
+    abcpack:{t:'Rahatarkuse ABC'},
+    abcq:{t:'Rahatarkuse ABC'},
+    abcdone:{t:'Rahatarkuse ABC'},
+    tip:{t:'Eneseteadlikkus'},
+    result:{t:'Eneseteadlikkus'},
+    teekond:{t:'Sinu teekond'},
+    sonaraamat:{t:'Sõnaraamat'},
+    theme:{t:'Raha psühholoogia'}
+  };
+  var FLOW={q:true,tip:true,result:true,abcpack:true,abcq:true,abcdone:true};
+  var DEEP={login:true,home:true,intro:true,tip:true,result:true,abcintro:true,abcpack:true,abcdone:true};
+  function show(id){
+    document.querySelectorAll('.screen').forEach(function(s){
+      s.classList.toggle('is-active',s.id==='screen-'+id);
+    });
+    var meta=TITLES[id]||{t:''};
+    var bar=document.querySelector('.appbar');
+    document.getElementById('appbar-title').textContent=meta.t;
+    bar.classList.toggle('is-empty',!meta.t);
+    bar.classList.toggle('has-back', id==='sonaraamat');
+    bar.classList.toggle('is-flow',!!FLOW[id]);
+    document.querySelector('.device').classList.toggle('is-deep',!!DEEP[id]);
+    window.__screen=id;
+    var sc=document.querySelector('#screen-'+id+' .scroll');
+    if(sc)sc.scrollTop=0;
+    var akt=document.getElementById('screen-'+id);
+    if(akt){ akt.setAttribute('tabindex','-1'); akt.focus({preventScroll:true}); }
+  }
+  window.show=show;
+
+  show('login');
+
+  // üks koht, kus progressiriba seatakse
+  window.setProg=function(tehtud,kokku,praegu,silt){
+    var bar=document.getElementById('appbar-prog');
+    if(!bar)return;
+    bar.querySelector('i').style.width=Math.round(tehtud/kokku*100)+'%';
+    bar.setAttribute('aria-valuemin',0);
+    bar.setAttribute('aria-valuemax',kokku);
+    bar.setAttribute('aria-valuenow',praegu);
+    bar.setAttribute('aria-label',silt);
+  };
+
+  document.getElementById('appbar-back').addEventListener('click',function(){
+    if(window.__screen==='q'&&window.qBack){window.qBack();return;}
+    if(window.__screen==='tip'&&window.tipBack){window.tipBack();return;}
+    if((window.__screen==='abcq'||window.__screen==='abcpack')&&window.abcBack){window.abcBack();return;}
+    if(window.__screen==='sonaraamat'){ show(window.__srFrom||'home'); return; }
+    if(window.__screen==='abcdone'&&window.abcDoneBack){ window.abcDoneBack(); return; }
+    if(window.__screen==='result'&&window.rBack){window.rBack();return;}
+  });
+
+  document.addEventListener('click',function(e){
+    var go=e.target.closest('[data-go]');
+    if(go){show(go.dataset.go);return;}
+    var tab=e.target.closest('[data-tab]');
+    if(tab&&tab.dataset.tab==='home'){show('home');return;}
+    if(tab&&tab.dataset.tab==='route'){show('teekond');return;}
+    if(tab&&tab.dataset.tab==='profile'){
+      var t=document.getElementById('toast');
+      t.textContent='Profiili ei ole veel tehtud.';
+      t.classList.add('on');
+      clearTimeout(window.__toast);
+      window.__toast=setTimeout(function(){t.classList.remove('on');},2600);
+      return;
+    }
+    if(tab&&tab.dataset.tab==='dict'){
+      window.__srFrom = (window.__screen==='sonaraamat') ? (window.__srFrom||'home') : window.__screen;
+      show('sonaraamat'); return;
+    }
+
+    var ajat=e.target.closest('[data-abcjatka]');
+    if(ajat){ if(window.abcJatka)window.abcJatka(); return; }
+
+    var asum=e.target.closest('[data-abcsum]');
+    if(asum){ if(window.abcTulemus)window.abcTulemus('teekond'); return; }
+
+    var sum=e.target.closest('[data-summary]');
+    if(sum){if(window.showResult)window.showResult('teekond');return;}
+
+    var lock=e.target.closest('[data-lock]');
+    if(lock){lock.classList.toggle('is-told');return;}
+
+    var head=e.target.closest('.theme-head[id$="-head"]');
+    if(head){
+      var pre=head.id.replace('-head','');
+      var box=document.getElementById(pre+'-days');
+      if(!box)return;
+      var open=box.style.display!=='none';
+      box.style.display=open?'none':'block';
+      head.setAttribute('aria-expanded',open?'false':'true');
+      document.getElementById(pre+'-chev').style.transform=open?'rotate(180deg)':'rotate(0deg)';
+      return;
+    }
+  });
+})();
+
+(function(){
+  var QUESTIONS=[
+    {topic:'Kuhu raha läheb',
+     title:'Kui hästi sa tead, kuhu sinu raha iga kuu kulub?',
+     sub:'Vali see, mis kirjeldab sind kõige paremini.',
+     opts:['Ei tea detailselt, kuhu raha läheb','Tean suures plaanis, kuhu raha läheb','Tean üsna selgelt, kuhu iga euro kulub'],
+     tip:'Teadmine, kuhu raha läheb, on esimene asi, mis <em>tõstab sinu rahatarkust.</em>'},
+    {topic:'Ootamatu kulu',
+     title:'Kui peaksid homme katma ootamatu 500 \u20ac suuruse kulu, siis\u2026',
+     sub:'Vali see, mis kehtib sinu kohta.',
+     opts:['Peaksin raha laenama ja see oleks keeruline','Saaksin hakkama, aga eelarve läheks sassi','Kataksin selle säästudest ja elu läheks edasi'],
+     tip:'Isegi väikesed säästud <em>annavad turvatunde.</em>'},
+    {topic:'Suhtumine rahasse',
+     title:'Kuidas sa suhtud rahasse?',
+     sub:'Vali see, mis kirjeldab sind kõige paremini.',
+     opts:['Tunnen raha pärast sageli stressi või muret','Tunnen end vahel kindlalt, vahel ebakindlalt','Tunnen, et juhin oma raha teadlikult ja rahulikult'],
+     tip:'Sinu suhtumine rahasse <em>mõjutab kõiki sinu otsuseid.</em>'},
+    {topic:'Rahaline eesmärk',
+     title:'Kas sul on selge rahaline eesmärk?',
+     sub:'Vali see, mis kehtib sinu kohta.',
+     opts:['Ei ole veel','Mõte on olemas, plaani veel mitte','On olemas ja tegutsen selle nimel'],
+     tip:'Selge eesmärk annab <em>suunatunde ja motivatsiooni.</em>'},
+    {topic:'Rahaline pinge',
+     title:'Kui sageli tunned kuu lõpus rahalist pinget?',
+     sub:'Vali see, mis kehtib sinu kohta.',
+     opts:['Peaaegu iga kuu','Mõnikord','Väga harva või mitte kunagi'],
+     tip:'Kui kulud on kuu alguses paigas, <em>on kuu lõpp rahulikum.</em>'}
+  ];
+
+  var TIERS=[
+    {max:3,
+     lead:'Oled oma teekonna alguses.',
+     body:'Järgmisena tulevad rahatarkuse põhitõed. Sealt saad teadmised, et edasi liikuda uute harjumuste loomisele.'},
+    {max:7,
+     lead:'Sul on palju häid harjumusi.',
+     body:'Järgmisena tulevad rahatarkuse põhitõed. Need aitavad olemasolevaid täiendada.'},
+    {max:10,
+     lead:'Oskad oma raha juhtida.',
+     body:'Järgmisena tulevad rahatarkuse põhitõed. Vaata, äkki on seal midagi uut ka sinu jaoks.'}
+  ];
+
+  var answers={}, idx=0;
+  var elTitle=document.getElementById('q-title'),
+      elSub=document.getElementById('q-sub'), elOpts=document.getElementById('q-opts'),
+      elNext=document.getElementById('q-next');
+
+  function drawProgress(){
+    var tehtud=0; for(var k in answers){tehtud++;}
+    window.setProg(tehtud,5,idx+1,'Küsimus '+(idx+1)+' viiest');
+  }
+  function render(){
+    var q=QUESTIONS[idx];
+    elTitle.textContent=q.title;
+    elSub.textContent=q.sub;
+    elOpts.innerHTML=q.opts.map(function(t,i){
+      var val=answers[idx]===i;
+      return '<button class="opt'+(val?' is-picked':'')+'" role="radio" aria-checked="'+val+'" data-pick="'+i+'"><span class="mark"></span><span>'+t+'</span></button>';
+    }).join('');
+    var lukus=answers[idx]===undefined;
+    elNext.classList.toggle('is-off',lukus);
+    elNext.disabled=lukus;
+    elNext.textContent='Jätka';
+    drawProgress();
+  }
+  elOpts.addEventListener('click',function(e){
+    var b=e.target.closest('[data-pick]'); if(!b)return;
+    answers[idx]=parseInt(b.dataset.pick,10); render();
+  });
+
+  window.showResult=showResult;
+  var resultFrom='q';
+  function showResult(from){
+    resultFrom=from||'q';
+    var score=0; for(var k in answers){score+=answers[k];} score=Math.round(score);
+    var t=TIERS.filter(function(x){return score<=x.max;})[0];
+    document.getElementById('r-lead').textContent=t.lead;
+    document.getElementById('r-body').textContent=t.body;
+
+    document.getElementById('r-summary-body').innerHTML=QUESTIONS.map(function(q,i){
+      var a=answers[i]; if(a===undefined)return '';
+      return '<div class="sum-row"><p class="sum-topic">'+q.topic+'</p><p class="sum-answer">'+q.opts[a]+'</p></div>';
+    }).join('');
+    document.getElementById('r-summary').setAttribute('hidden','');
+    document.getElementById('r-toggle').setAttribute('aria-expanded','false');
+    document.getElementById('r-toggle-label').textContent='Vaata oma vastuseid';
+    document.getElementById('r-chev').style.transform='rotate(0deg)';
+
+    if(window.fortuState){window.fortuState.t1Done=true;}
+    if(window.renderTeekond){window.renderTeekond();}
+    if(window.renderHome){window.renderHome();}
+    window.show('result');
+  }
+
+  elNext.addEventListener('click',function(){
+    if(elNext.classList.contains('is-off'))return;
+    var q=QUESTIONS[idx];
+    document.getElementById('tip-big').innerHTML=q.tip;
+    document.getElementById('tip-next').textContent='Jätka';
+    window.show('tip');
+  });
+  document.getElementById('tip-next').addEventListener('click',function(){
+    if(idx<4){idx++;render();window.show('q');}
+    else{showResult();}
+  });
+  window.tipBack=function(){window.show('q');};
+  window.qBack=function(){
+    if(idx>0){idx--;render();document.querySelector('#screen-q .scroll').scrollTop=0;}
+    else{window.show('day0');}
+  };
+  window.rBack=function(){
+    if(resultFrom==='teekond'){window.show('teekond');return;}
+    idx=4;render();window.show('q');
+  };
+  document.getElementById('r-toggle').addEventListener('click',function(){
+    var box=document.getElementById('r-summary');
+    var open=box.hasAttribute('hidden');
+    if(open){box.removeAttribute('hidden');}else{box.setAttribute('hidden','');}
+    this.setAttribute('aria-expanded',open?'true':'false');
+    document.getElementById('r-chev').style.transform=open?'rotate(180deg)':'rotate(0deg)';
+    document.getElementById('r-toggle-label').textContent=open?'Peida vastused':'Vaata oma vastuseid';
+  });
+  render();
+})();
+
+(function(){
+  function renderHome(){
+    var alustanud = window.fortuState && window.fortuState.t1Done;
+    var el = document.getElementById('home-body');
+    var cta = document.getElementById('home-cta');
+    if(!alustanud){
+      el.innerHTML =
+        '<div style="padding-top:var(--s3)">'+
+        '<p class="h2" style="color:var(--gold);margin-bottom:8px">Tere!</p>'+
+        '<h1 class="h1" style="margin-bottom:var(--s1)">Mina olen Fortu</h1>'+
+        '<p class="body" style="color:var(--on-deep-dim);margin-bottom:var(--s1)">Mul on hea meel, et oled siin.</p>'+
+        '<p class="say">N\u00e4itan sulle, <em>kust raha tuleb ja kuhu l\u00e4heb.</em> Ja aitan sul seda juhtima \u00f5ppida.</p>'+
+        '</div>'+
+        '<div class="mascot" style="width:184px;height:184px;margin-top:var(--s3);margin-bottom:var(--s3)">maskott<br>FORTU</div>';
+      cta.style.display='block';
+      return;
+    }
+    var tehtud = window.fortuState.t2Done;
+    var SAMM = ['Raha ja mina','Raha ja tunded','Raha ja uskumused','Raha ja valikud','Eesm\u00e4rkide ABC','Minu miks ja tulevikupilt','Kokkuv\u00f5te'];
+    var abcOk = window.fortuState.abcDone;
+    var kaardiMeta = abcOk ? ('<b>'+(tehtud+1)+'. samm</b> \u00b7 '+SAMM[tehtud]) : '<b>2. samm</b> \u00b7 Rahatarkuse ABC';
+    var kaardiPips = abcOk ? Math.round(tehtud/7*100) : 50;
+    var kaardiLoend = abcOk ? (tehtud+' / 7') : '1 / 2';
+    var kaardiSiht = abcOk ? 'theme' : 'abcintro';
+    el.innerHTML =
+      '<div style="padding-top:var(--s3)">'+
+      '<h1 class="h1" style="font-size:24px;margin-bottom:6px">Tere taas!</h1>'+
+      '<p class="body" style="color:var(--on-deep-dim);font-size:15px">T\u00e4na on hea p\u00e4ev edasi liikuda.</p>'+
+      '</div>'+
+      '<div class="mascot" style="width:124px;height:124px;margin:var(--s2) auto">maskott<br>FORTU</div>'+
+      '<div class="hcard">'+
+        '<p class="t">J\u00e4tka teekonda</p>'+
+        '<p class="meta">'+kaardiMeta+'</p>'+
+        '<div class="hrow">'+
+          '<span class="htrack"><i style="width:'+kaardiPips+'%"></i></span>'+
+          '<span class="hcnt">'+kaardiLoend+'</span>'+
+          '<button class="hgo" data-go="'+kaardiSiht+'" aria-label="J\u00e4tka teekonda"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="hduo">'+
+        '<div class="hcard"><p class="lbl">P\u00e4evi koos Fortuga</p><p class="big" style="color:var(--gold)">14</p><p class="unit">p\u00e4eva</p></div>'+
+        '<div class="hcard"><p class="lbl">Teemad l\u00e4bitud</p><p class="big">'+(abcOk?1:0)+'<span style="font-size:16px;opacity:.6"> / 5</span></p><p class="unit">teemat</p></div>'+
+      '</div>'+
+      '<p class="hsay">Pisikesed sammud viivad suurte muutusteni.</p>';
+    cta.style.display='none';
+  }
+  window.renderHome = renderHome;
+
+  var CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m9 12 2 2 4-4"/></svg>';
+  var CIRCLE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>';
+  var ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>';
+  var LOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+
+  var SAMMUD=[
+    {n:'Raha ja mina', i:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.2 18a6 6 0 0 1 11.6 0"/>'},
+    {n:'Raha ja tunded', i:'<path d="M19.5 12.6 12 20l-7.5-7.4a5 5 0 1 1 7.5-6.6 5 5 0 1 1 7.5 6.6z"/>'},
+    {n:'Raha ja uskumused', i:'<path d="M9 18h6M10 21h4"/><path d="M8.5 14a5.5 5.5 0 1 1 7 0c-.6.5-1 1.2-1 2h-5c0-.8-.4-1.5-1-2z"/>'},
+    {n:'Raha ja valikud', i:'<path d="M4 5h4l8 14h4"/><path d="M4 19h4l3-5"/><path d="M17 3l3 2-3 2"/><path d="M17 17l3 2-3 2"/>'},
+    {n:'Eesmärkide ABC', i:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>'},
+    {n:'Minu miks ja tulevikupilt', i:'<circle cx="12" cy="12" r="9"/><path d="m15 9-2.5 5.5L7 17l2.5-5.5z"/>'},
+    {n:'Kokkuvõte', i:'<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 13 2 2 4-4"/>'}
+  ];
+
+  window.fortuState={t1Done:false,abcDone:false,t2Done:0};
+
+  function pips(done,kokku){
+    var out='';
+    for(var i=0;i<kokku;i++){
+      var cls='pip-dot';
+      if(i<done)cls+=' is-done';
+      else if(i===done)cls+=' is-now';
+      out+='<span class="'+cls+'"></span>';
+      if(i<kokku-1)out+='<span class="pip-bar"><i style="width:'+(i<done?'100%':'0')+'"></i></span>';
+    }
+    return out;
+  }
+
+  var T1=[
+    {n:'Eneseteadlikkus', i:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.2 18a6 6 0 0 1 11.6 0"/>', go:'summary'},
+    {n:'Rahatarkuse ABC', i:'<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/>', go:'abcsum'}
+  ];
+
+  function teema1(){
+    var eneseOk=window.fortuState.t1Done, abcOk=window.fortuState.abcDone;
+    if(eneseOk && !abcOk){
+      var read1=T1.map(function(t,i){
+        var tehtud=(i===0);
+        var cls=tehtud?'is-done':'is-now';
+        var ic=tehtud?CHECK:ARROW;
+        var olek=tehtud?'l\u00e4bitud':'k\u00e4esolev';
+        var silt='Samm '+(i+1)+' kahest: '+t.n+'. '+olek.charAt(0).toUpperCase()+olek.slice(1)+'.';
+        var go=tehtud?' data-summary':' data-abcjatka';
+        return '<button class="day-row '+cls+'"'+go+' aria-label="'+silt+'">'+
+          '<svg class="topic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+t.i+'</svg>'+
+          '<span class="name">'+t.n+'</span>'+ic+'</button>';
+      }).join('');
+      return '<div class="theme-open" style="margin-bottom:var(--s2)">'+
+        '<button class="theme-head" id="t1-head" aria-expanded="true" aria-controls="t1-days">'+
+          '<div class="top"><span class="name">Rahatarkuse algus</span><span id="t1-chev" class="chev">'+CHEV+'</span></div>'+
+          '<div class="theme-meter"><div class="pips">'+pips(1,2)+'</div><span class="count">1 / 2 sammu</span></div>'+
+        '</button>'+
+        '<div class="days" id="t1-days">'+read1+'</div></div>';
+    }
+    if(eneseOk && abcOk){
+      var read=T1.map(function(t,i){
+        var silt='Samm '+(i+1)+' kahest: '+t.n+'. L\u00e4bitud.';
+        var siht = (t.go==='summary') ? ' data-summary' : ' data-abcsum';
+        return '<button class="day-row is-done"'+siht+' aria-label="'+silt+'">'+
+          '<svg class="topic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+t.i+'</svg>'+
+          '<span class="name">'+t.n+'</span>'+CHECK+'</button>';
+      }).join('');
+      return '<div class="theme-open" style="margin-bottom:var(--s2)">'+
+        '<button class="theme-head" id="t1-head" aria-expanded="false" aria-controls="t1-days">'+
+          '<div class="top"><span class="name">Rahatarkuse algus</span><span id="t1-chev" class="chev" style="transform:rotate(180deg)">'+CHEV+'</span></div>'+
+          '<div class="theme-meter"><div class="pips">'+pips(2,2)+'</div><span class="count">2 / 2 sammu</span></div>'+
+        '</button>'+
+        '<div class="days" id="t1-days" style="display:none">'+read+'</div></div>';
+    }
+    return '<div class="theme-open" style="margin-bottom:var(--s2)">'+
+      '<div class="theme-head" style="cursor:default">'+
+        '<div class="top"><span class="name">Rahatarkuse algus</span></div>'+
+        '<p class="desc">Kuidas leida oma l\u00e4htepunkt ja m\u00f5ista p\u00f5hit\u00f5desid.</p>'+
+        '<div class="theme-meter" style="margin-bottom:var(--s1)"><div class="pips">'+pips(0,2)+'</div><span class="count">0 / 2 sammu</span></div>'+
+        '<button class="btn btn-primary" data-go="day0">Alusta</button>'+
+      '</div></div>';
+  }
+
+  function teema2(){
+    if(!(window.fortuState.t1Done && window.fortuState.abcDone)){
+      return '<button class="theme-locked" data-lock>'+
+        '<div class="top"><span class="name">Teema 1: Raha ps\u00fchholoogia</span>'+LOCK+'</div>'+
+        '<p class="desc">Kuidas m\u00f5ista oma suhet rahaga.</p>'+
+        '<p class="why">Avaneb, kui rahatarkuse algus on l\u00e4bitud.</p></button>';
+    }
+    var done=window.fortuState.t2Done;
+    var rows=SAMMUD.map(function(t,i){
+      var cls,ic;
+      if(i<done){cls='is-done';ic=CHECK;}
+      else if(i===done){cls='is-now';ic=ARROW;}
+      else{cls='is-next';ic=CIRCLE;}
+      var olek=(i<done)?'l\u00e4bitud':(i===done?'k\u00e4esolev':'alustamata');
+      var silt='Samm '+(i+1)+' seitsmest: '+t.n+'. '+olek.charAt(0).toUpperCase()+olek.slice(1)+'.';
+      return '<button class="day-row '+cls+'" data-go="theme" aria-label="'+silt+'">'+
+             '<svg class="topic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+t.i+'</svg>'+
+             '<span class="name">'+t.n+'</span>'+ic+'</button>';
+    }).join('');
+    return '<div class="theme-open">'+
+      '<button class="theme-head" id="t2-head" aria-expanded="false" aria-controls="t2-days">'+
+        '<div class="top"><span class="name">Teema 1: Raha ps\u00fchholoogia</span><span id="t2-chev" class="chev" style="transform:rotate(180deg)">'+CHEV+'</span></div>'+
+        '<p class="desc">Kuidas m\u00f5ista oma suhet rahaga.</p>'+
+        '<div class="theme-meter"><div class="pips">'+pips(done,7)+'</div><span class="count">'+done+' / 7 sammu</span></div>'+
+      '</button>'+
+      '<div class="days" id="t2-days" style="display:none">'+rows+'</div></div>';
+  }
+
+  window.renderTeekond=function(){
+    document.getElementById('tk-t1').innerHTML=teema1();
+    document.getElementById('tk-t2').innerHTML=teema2();
+  };
+  window.renderTeekond();
+  window.renderHome();
+
+  document.getElementById('theme-plan').innerHTML=SAMMUD.map(function(t){
+    return '<div class="plan-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+t.i+'</svg><span>'+t.n+'</span></div>';
+  }).join('');
+})();
+
+(function(){
+  // [nimi, [oige, vale, vale], kuvamisjarjekord]
+  var ABC=[
+    ['Palgapäev',['Kokkulepitud kuupäev, mil saad kätte oma teenitud töötasu','Kuupäev, mil pank võtab kontolt maha kõik püsimaksed','Kuupäev, milleks peavad kõik kuu arved makstud olema'],[1,0,2]],
+    ['Sissetulek',['Raha, mis sulle regulaarselt sisse tuleb (nt palk, toetus, lisatöö)','Raha, mis jääb kuu lõpus kontole alles pärast kõiki makseid','Raha, mille laenad pangalt ja maksad intressiga tagasi'],[2,1,0]],
+    ['Kulu',['Raha, mis läheb välja kaupade ja teenuste eest tasumiseks','Raha, mille paned kõrvale oma tulevikueesmärkide jaoks','Raha, mille teenid oma töö või ettevõtlusega igas kuus'],[0,2,1]],
+    ['Püsikulud',['Kulud, mis on iga kuu enam-vähem sama suured (nt üür, laen, side)','Kulud, mille suurus sõltub sellest, kui palju sa kuus ostad','Kulud, mis tekivad ainult korra aastas (nt kindlustus, remont)'],[1,2,0]],
+    ['Muutuvad kulud',['Kulud, mille suurus muutub kuust kuusse (nt toit, riided, vaba aeg)','Kulud, mis on lepinguga fikseeritud ja jäävad alati samaks','Kulud, mis peetakse palgast kinni juba enne väljamakset'],[2,0,1]],
+    ['Rahavoog',['Raha liikumine ehk sissetulekute ja väljaminekute vahe','Raha, mis on kontol olemas ja mida ei ole veel kulutatud','Raha, mille kannad ühelt kontolt teisele oma pangas'],[1,0,2]],
+    ['Eelarve',['Plaan, kuidas oma sissetulekuid ja kulusid juhtida','Kokkuvõte sellest, kui palju sa eelmisel kuul kulutasid','Summa, mis on kuu viimasel päeval kontole alles jäänud'],[0,1,2]],
+    ['Sääst',['Raha, mille paned kõrvale ega kuluta seda kohe ära','Raha, mille pank peab palgast kinni maksude tasumiseks','Raha, mille oled juba kulutanud reisi või suurema ostu peale'],[2,1,0]],
+    ['Puhver',['Varuraha, mis on ootamatute kulude jaoks kõrvale pandud','Raha, mille oled pikaks ajaks investeeringutesse paigutanud','Raha, millega maksad iga kuu oma püsikulud ära'],[1,0,2]],
+    ['Rahaline eesmärk',['Konkreetne siht, mille saavutamiseks raha kogud (nt reis, auto)','Summa, mille pead iga kuu arvete jaoks kõrvale panema','Raha, mis jääb kuu lõpus juhuslikult üle ja mida ei kuluta'],[1,2,0]],
+    ['Võlg',['Raha, mille oled laenanud ja mis tuleb tagasi maksta','Raha, mille oled pannud hoiusele intressi teenima','Raha, mille sulle kingiti ja mida ei pea tagastama'],[2,0,1]],
+    ['Intress',['Raha hind — tasu laenu eest või tulu hoiuse pealt','Summa, mille paned iga kuu säästukontole kõrvale','Tasu, mida pank võtab konto ja kaardi hoidmise eest'],[0,2,1]],
+    ['Investeerimine',['Raha paigutamine varadesse, et selle väärtust kasvatada','Raha hoidmine kodus sularahas, et see oleks alati käepärast','Raha kasutamine igapäevaste ostude ja arvete tasumiseks'],[2,1,0]],
+    ['Inflatsioon',['Üldine hinnatõus, mille tõttu raha ostujõud väheneb','Üldine hinnalangus, mille tõttu raha ostujõud kasvab','Ühe kauba hinnatõus, mis teisi hindu ei mõjuta'],[1,0,2]],
+    ['Rahaharjumus',['Korduv tegevus või mõttemuster, mis kujundab su rahaasju','Ühekordne otsus, mille tegid ja mida rohkem ei korda','Reegel, mille pank on sinu konto kasutamiseks seadnud'],[0,1,2]]
+  ];
+
+  var PAKID=[
+    {algus:0, kick:'RAHA LIIGUB', say:'Kõigepealt see, mis kordub iga kuu: <em>raha tuleb sisse ja läheb välja.</em>'},
+    {algus:5, kick:'SA JUHID SEDA', say:'Nüüd need sõnad, mis aitavad sul <em>seda liikumist ise juhtida.</em>'},
+    {algus:10, kick:'RAHA AJAS', say:'Viimased viis puudutavad aega: <em>mis kasvab, mis kahaneb ja mis kordub.</em>'}
+  ];
+
+  var OK='<svg class="verdict" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>';
+  var NO='<svg class="verdict" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+  var idx=0, vastused={}, kontrollitud={};
+  var elT=document.getElementById('abc-title'),
+      elO=document.getElementById('abc-opts'),
+      elN=document.getElementById('abc-next');
+
+  function riba(){
+    var tehtud=0; for(var k in kontrollitud) tehtud++;
+    window.setProg(tehtud,15,idx+1,'Mõiste '+(idx+1)+' viieteistkümnest');
+  }
+
+  function joonista(){
+    var q=ABC[idx], jrk=q[2], v=q[1];
+    elT.textContent=q[0];
+    var valitud=vastused[idx], tehtud=kontrollitud[idx];
+    elO.innerHTML=jrk.map(function(algIdx){
+      var cls='opt', ic='';
+      if(tehtud){
+        if(algIdx===0){cls+=' is-ok'; ic=OK;}
+        else if(algIdx===valitud){cls+=' is-no'; ic=NO;}
+        else{cls+=' is-dim';}
+      } else if(algIdx===valitud){cls+=' is-picked';}
+      var val=(algIdx===valitud);
+      var lisa='';
+      if(tehtud){
+        if(algIdx===0) lisa=' <span class="sr-only">\u00d5ige vastus</span>';
+        else if(val) lisa=' <span class="sr-only">Sinu vastus, vale</span>';
+      }
+      return '<button class="'+cls+'" role="radio" aria-checked="'+val+'" data-abc="'+algIdx+'"'+(tehtud?' disabled':'')+'><span class="mark"></span><span>'+v[algIdx]+lisa+'</span>'+ic+'</button>';
+    }).join('');
+    var lukus2=(valitud===undefined);
+    elN.classList.toggle('is-off', lukus2);
+    elN.disabled=lukus2;
+    elN.textContent = tehtud ? (idx===14?'Vaata tulemust':'Jätka') : 'Kontrolli';
+    riba();
+    var sc=document.querySelector('#screen-abcq .scroll'); if(sc)sc.scrollTop=0;
+  }
+
+  function pakk(i){
+    var p=PAKID[i];
+    document.getElementById('pack-kick').textContent=p.kick;
+    document.getElementById('pack-say').innerHTML=p.say;
+    document.getElementById('pack-next').dataset.algus=p.algus;
+    riba();
+    window.show('abcpack');
+  }
+  window.abcPakk=pakk;
+
+  elO.addEventListener('click',function(e){
+    var b=e.target.closest('[data-abc]'); if(!b||kontrollitud[idx])return;
+    vastused[idx]=parseInt(b.dataset.abc,10); joonista();
+  });
+
+  elN.addEventListener('click',function(){
+    if(elN.classList.contains('is-off'))return;
+    if(!kontrollitud[idx]){ kontrollitud[idx]=true; joonista(); return; }
+    if(idx===14){ lopeta(); return; }
+    idx++;
+    var uusPakk=PAKID.filter(function(p){return p.algus===idx;})[0];
+    if(uusPakk){ pakk(PAKID.indexOf(uusPakk)); } else { joonista(); window.show('abcq'); }
+  });
+
+  document.getElementById('abc-start').addEventListener('click',function(){ idx=0; pakk(0); });
+  document.getElementById('pack-next').addEventListener('click',function(){
+    idx=parseInt(this.dataset.algus,10); joonista(); window.show('abcq');
+  });
+
+  var abcFrom='q';
+  function lopeta(){
+    var oigeid=0;
+    for(var k in vastused){ if(vastused[k]===0) oigeid++; }
+    document.getElementById('abc-score').textContent=oigeid;
+    window.fortuState.abcDone=true;
+    abcFrom='q';
+    if(window.renderTeekond)window.renderTeekond();
+    if(window.renderHome)window.renderHome();
+    window.show('abcdone');
+  }
+
+  // teekonnalt poolelijäänud ABC juurde
+  window.abcJatka=function(){
+    var alustatud=false;
+    for(var k in kontrollitud){alustatud=true;break;}
+    if(!alustatud){ window.show('abcintro'); return; }
+    joonista(); window.show('abcq');
+  };
+
+  // teekonnalt tulemust vaatama
+  window.abcTulemus=function(kust){
+    abcFrom=kust||'teekond';
+    var oigeid=0;
+    for(var k in vastused){ if(vastused[k]===0) oigeid++; }
+    document.getElementById('abc-score').textContent=oigeid;
+    window.show('abcdone');
+  };
+  window.abcDoneBack=function(){
+    if(abcFrom==='teekond'){ window.show('teekond'); return; }
+    idx=14; joonista(); window.show('abcq');
+  };
+
+  // ---- SÕNARAAMAT ----
+  // Kogu rakenduse terminid. ABC viisteist mõistet tulevad automaatselt,
+  // ülejäänud lisatakse siia. Iga uue osaga vaadatakse üle, mis juurde tuleb.
+  var SR_LISA=[
+    ['Eneseteadlikkus','Teadmine sellest, kus sa oma rahaasjadega praegu oled'],
+    ['Rahatarkus','Oskus juhtida oma raha ja teha teadlikke otsuseid']
+    // teema 1 mõisted lisanduvad siia
+  ];
+
+  (function(){
+    var el=document.getElementById('sr-list');
+    if(!el)return;
+
+    // eesti tähestik: õ, ä, ö, ü tulevad pärast v-d
+    var TAHED='abcdefghijklmnoprsšzžtuvwõäöüxy';
+    function votme(sona){
+      var v=[], t=sona.toLowerCase();
+      for(var i=0;i<t.length;i++){
+        var k=TAHED.indexOf(t.charAt(i));
+        v.push(k<0?99:k);
+      }
+      return v;
+    }
+    function vordle(a,b){
+      var x=votme(a[0]), y=votme(b[0]);
+      for(var i=0;i<Math.min(x.length,y.length);i++){
+        if(x[i]!==y[i])return x[i]-y[i];
+      }
+      return x.length-y.length;
+    }
+
+    var koik=ABC.map(function(q){return [q[0], q[1][0]];}).concat(SR_LISA);
+    koik.sort(vordle);
+
+    var html='', eelmineTaht='';
+    koik.forEach(function(kirje){
+      var taht=kirje[0].charAt(0).toUpperCase();
+      if(taht!==eelmineTaht){
+        html += '<p class="sr-group">'+taht+'</p>';
+        eelmineTaht=taht;
+      }
+      html += '<div class="sr-item"><p class="w">'+kirje[0]+'</p><p class="d">'+kirje[1]+'</p></div>';
+    });
+    el.innerHTML=html;
+
+  })();
+
+  window.abcBack=function(){
+    if(window.__screen==='abcpack'){
+      if(idx===0){ window.show('abcintro'); return; }
+      idx--; joonista(); window.show('abcq'); return;
+    }
+    var onPakiAlgus=PAKID.filter(function(p){return p.algus===idx;}).length>0;
+    if(onPakiAlgus){
+      var i=PAKID.map(function(p){return p.algus;}).indexOf(idx);
+      pakk(i); return;
+    }
+    idx--; joonista(); window.show('abcq');
+  };
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,455 @@
+{
+  "eneseteadlikkus": {
+    "kysimused": [
+      {
+        "teema": "Kuhu raha läheb",
+        "kysimus": "Kui hästi sa tead, kuhu sinu raha iga kuu kulub?",
+        "juhis": "Vali see, mis kirjeldab sind kõige paremini.",
+        "valikud": [
+          "Ei tea detailselt, kuhu raha läheb",
+          "Tean suures plaanis, kuhu raha läheb",
+          "Tean üsna selgelt, kuhu iga euro kulub"
+        ],
+        "vihje": "Teadmine, kuhu raha läheb, on esimene asi, mis <em>tõstab sinu rahatarkust.</em>"
+      },
+      {
+        "teema": "Ootamatu kulu",
+        "kysimus": "Kui peaksid homme katma ootamatu 500 € suuruse kulu, siis…",
+        "juhis": "Vali see, mis kehtib sinu kohta.",
+        "valikud": [
+          "Peaksin raha laenama ja see oleks keeruline",
+          "Saaksin hakkama, aga eelarve läheks sassi",
+          "Kataksin selle säästudest ja elu läheks edasi"
+        ],
+        "vihje": "Isegi väikesed säästud <em>annavad turvatunde.</em>"
+      },
+      {
+        "teema": "Suhtumine rahasse",
+        "kysimus": "Kuidas sa suhtud rahasse?",
+        "juhis": "Vali see, mis kirjeldab sind kõige paremini.",
+        "valikud": [
+          "Tunnen raha pärast sageli stressi või muret",
+          "Tunnen end vahel kindlalt, vahel ebakindlalt",
+          "Tunnen, et juhin oma raha teadlikult ja rahulikult"
+        ],
+        "vihje": "Sinu suhtumine rahasse <em>mõjutab kõiki sinu otsuseid.</em>"
+      },
+      {
+        "teema": "Rahaline eesmärk",
+        "kysimus": "Kas sul on selge rahaline eesmärk?",
+        "juhis": "Vali see, mis kehtib sinu kohta.",
+        "valikud": [
+          "Ei ole veel",
+          "Mõte on olemas, plaani veel mitte",
+          "On olemas ja tegutsen selle nimel"
+        ],
+        "vihje": "Selge eesmärk annab <em>suunatunde ja motivatsiooni.</em>"
+      },
+      {
+        "teema": "Rahaline pinge",
+        "kysimus": "Kui sageli tunned kuu lõpus rahalist pinget?",
+        "juhis": "Vali see, mis kehtib sinu kohta.",
+        "valikud": [
+          "Peaaegu iga kuu",
+          "Mõnikord",
+          "Väga harva või mitte kunagi"
+        ],
+        "vihje": "Kui kulud on kuu alguses paigas, <em>on kuu lõpp rahulikum.</em>"
+      }
+    ],
+    "tasemed": [
+      {
+        "kuni": 3,
+        "juhtlause": "Oled oma teekonna alguses.",
+        "selgitus": "Järgmisena tulevad rahatarkuse põhitõed. Sealt saad teadmised, et edasi liikuda uute harjumuste loomisele."
+      },
+      {
+        "kuni": 7,
+        "juhtlause": "Sul on palju häid harjumusi.",
+        "selgitus": "Järgmisena tulevad rahatarkuse põhitõed. Need aitavad olemasolevaid täiendada."
+      },
+      {
+        "kuni": 10,
+        "juhtlause": "Oskad oma raha juhtida.",
+        "selgitus": "Järgmisena tulevad rahatarkuse põhitõed. Vaata, äkki on seal midagi uut ka sinu jaoks."
+      }
+    ]
+  },
+  "rahatarkuse_abc": {
+    "pakid": [
+      {
+        "algab": 0,
+        "silt": "RAHA LIIGUB",
+        "lause": "Kõigepealt see, mis kordub iga kuu: <em>raha tuleb sisse ja läheb välja.</em>"
+      },
+      {
+        "algab": 5,
+        "silt": "SA JUHID SEDA",
+        "lause": "Nüüd need sõnad, mis aitavad sul <em>seda liikumist ise juhtida.</em>"
+      },
+      {
+        "algab": 10,
+        "silt": "RAHA AJAS",
+        "lause": "Viimased viis puudutavad aega: <em>mis kasvab, mis kahaneb ja mis kordub.</em>"
+      }
+    ],
+    "moisted": [
+      {
+        "moiste": "Palgapäev",
+        "oige": "Kokkulepitud kuupäev, mil saad kätte oma teenitud töötasu",
+        "valed": [
+          "Kuupäev, mil pank võtab kontolt maha kõik püsimaksed",
+          "Kuupäev, milleks peavad kõik kuu arved makstud olema"
+        ],
+        "kuvamisjarjekord": [
+          1,
+          0,
+          2
+        ]
+      },
+      {
+        "moiste": "Sissetulek",
+        "oige": "Raha, mis sulle regulaarselt sisse tuleb (nt palk, toetus, lisatöö)",
+        "valed": [
+          "Raha, mis jääb kuu lõpus kontole alles pärast kõiki makseid",
+          "Raha, mille laenad pangalt ja maksad intressiga tagasi"
+        ],
+        "kuvamisjarjekord": [
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "moiste": "Kulu",
+        "oige": "Raha, mis läheb välja kaupade ja teenuste eest tasumiseks",
+        "valed": [
+          "Raha, mille paned kõrvale oma tulevikueesmärkide jaoks",
+          "Raha, mille teenid oma töö või ettevõtlusega igas kuus"
+        ],
+        "kuvamisjarjekord": [
+          0,
+          2,
+          1
+        ]
+      },
+      {
+        "moiste": "Püsikulud",
+        "oige": "Kulud, mis on iga kuu enam-vähem sama suured (nt üür, laen, side)",
+        "valed": [
+          "Kulud, mille suurus sõltub sellest, kui palju sa kuus ostad",
+          "Kulud, mis tekivad ainult korra aastas (nt kindlustus, remont)"
+        ],
+        "kuvamisjarjekord": [
+          1,
+          2,
+          0
+        ]
+      },
+      {
+        "moiste": "Muutuvad kulud",
+        "oige": "Kulud, mille suurus muutub kuust kuusse (nt toit, riided, vaba aeg)",
+        "valed": [
+          "Kulud, mis on lepinguga fikseeritud ja jäävad alati samaks",
+          "Kulud, mis peetakse palgast kinni juba enne väljamakset"
+        ],
+        "kuvamisjarjekord": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "moiste": "Rahavoog",
+        "oige": "Raha liikumine ehk sissetulekute ja väljaminekute vahe",
+        "valed": [
+          "Raha, mis on kontol olemas ja mida ei ole veel kulutatud",
+          "Raha, mille kannad ühelt kontolt teisele oma pangas"
+        ],
+        "kuvamisjarjekord": [
+          1,
+          0,
+          2
+        ]
+      },
+      {
+        "moiste": "Eelarve",
+        "oige": "Plaan, kuidas oma sissetulekuid ja kulusid juhtida",
+        "valed": [
+          "Kokkuvõte sellest, kui palju sa eelmisel kuul kulutasid",
+          "Summa, mis on kuu viimasel päeval kontole alles jäänud"
+        ],
+        "kuvamisjarjekord": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "moiste": "Sääst",
+        "oige": "Raha, mille paned kõrvale ega kuluta seda kohe ära",
+        "valed": [
+          "Raha, mille pank peab palgast kinni maksude tasumiseks",
+          "Raha, mille oled juba kulutanud reisi või suurema ostu peale"
+        ],
+        "kuvamisjarjekord": [
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "moiste": "Puhver",
+        "oige": "Varuraha, mis on ootamatute kulude jaoks kõrvale pandud",
+        "valed": [
+          "Raha, mille oled pikaks ajaks investeeringutesse paigutanud",
+          "Raha, millega maksad iga kuu oma püsikulud ära"
+        ],
+        "kuvamisjarjekord": [
+          1,
+          0,
+          2
+        ]
+      },
+      {
+        "moiste": "Rahaline eesmärk",
+        "oige": "Konkreetne siht, mille saavutamiseks raha kogud (nt reis, auto)",
+        "valed": [
+          "Summa, mille pead iga kuu arvete jaoks kõrvale panema",
+          "Raha, mis jääb kuu lõpus juhuslikult üle ja mida ei kuluta"
+        ],
+        "kuvamisjarjekord": [
+          1,
+          2,
+          0
+        ]
+      },
+      {
+        "moiste": "Võlg",
+        "oige": "Raha, mille oled laenanud ja mis tuleb tagasi maksta",
+        "valed": [
+          "Raha, mille oled pannud hoiusele intressi teenima",
+          "Raha, mille sulle kingiti ja mida ei pea tagastama"
+        ],
+        "kuvamisjarjekord": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "moiste": "Intress",
+        "oige": "Raha hind — tasu laenu eest või tulu hoiuse pealt",
+        "valed": [
+          "Summa, mille paned iga kuu säästukontole kõrvale",
+          "Tasu, mida pank võtab konto ja kaardi hoidmise eest"
+        ],
+        "kuvamisjarjekord": [
+          0,
+          2,
+          1
+        ]
+      },
+      {
+        "moiste": "Investeerimine",
+        "oige": "Raha paigutamine varadesse, et selle väärtust kasvatada",
+        "valed": [
+          "Raha hoidmine kodus sularahas, et see oleks alati käepärast",
+          "Raha kasutamine igapäevaste ostude ja arvete tasumiseks"
+        ],
+        "kuvamisjarjekord": [
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "moiste": "Inflatsioon",
+        "oige": "Üldine hinnatõus, mille tõttu raha ostujõud väheneb",
+        "valed": [
+          "Üldine hinnalangus, mille tõttu raha ostujõud kasvab",
+          "Ühe kauba hinnatõus, mis teisi hindu ei mõjuta"
+        ],
+        "kuvamisjarjekord": [
+          1,
+          0,
+          2
+        ]
+      },
+      {
+        "moiste": "Rahaharjumus",
+        "oige": "Korduv tegevus või mõttemuster, mis kujundab su rahaasju",
+        "valed": [
+          "Ühekordne otsus, mille tegid ja mida rohkem ei korda",
+          "Reegel, mille pank on sinu konto kasutamiseks seadnud"
+        ],
+        "kuvamisjarjekord": [
+          0,
+          1,
+          2
+        ]
+      }
+    ]
+  },
+  "sonaraamat_lisaks": [
+    {
+      "moiste": "Eneseteadlikkus",
+      "seletus": "Teadmine sellest, kus sa oma rahaasjadega praegu oled"
+    },
+    {
+      "moiste": "Rahatarkus",
+      "seletus": "Oskus juhtida oma raha ja teha teadlikke otsuseid"
+    }
+  ],
+  "teema2_sammud": [
+    "Raha ja mina",
+    "Raha ja tunded",
+    "Raha ja uskumused",
+    "Raha ja valikud",
+    "Eesmärkide ABC",
+    "Minu miks ja tulevikupilt",
+    "Kokkuvõte"
+  ],
+  "teema1_sammud": [
+    "Eneseteadlikkus",
+    "Rahatarkuse ABC"
+  ],
+  "teekond": [
+    {
+      "nimi": "Rahatarkuse algus",
+      "number": null,
+      "kirjeldus": "Kuidas leida oma lähtepunkt ja mõista põhitõdesid.",
+      "samme": 2
+    },
+    {
+      "nimi": "Raha psühholoogia",
+      "number": 1,
+      "kirjeldus": "Kuidas mõista oma suhet rahaga.",
+      "samme": 7
+    },
+    {
+      "nimi": "Raha juhtimine",
+      "number": 2,
+      "kirjeldus": "Kuidas jälgida kulusid ja luua eelarve.",
+      "samme": 7
+    },
+    {
+      "nimi": "Rahaline turvalisus",
+      "number": 3,
+      "kirjeldus": "Kuidas luua puhverkonto ja valmistuda ootamatusteks.",
+      "samme": 7
+    },
+    {
+      "nimi": "Raha kasvamine",
+      "number": 4,
+      "kirjeldus": "Kuidas investeerimine töötab ja mille põhjal otsuseid teha.",
+      "samme": 7
+    }
+  ],
+  "ekraanid": {
+    "avavaade": {
+      "pealkiri": "Rahatarkus algab sinust",
+      "abitekst": "Väikeste sammudega suurema kindlustundeni.",
+      "nupud": [
+        "Jätka Google'iga",
+        "Jätka Apple'iga"
+      ],
+      "markus": "Jätkates nõustud kasutustingimuste ja privaatsuspoliitikaga"
+    },
+    "kodu_uus": {
+      "silt": "Tere!",
+      "pealkiri": "Mina olen Fortu",
+      "kehatekst": "Mul on hea meel, et oled siin.",
+      "fortu_kone": "Näitan sulle, kust raha tuleb ja kuhu läheb. Ja aitan sul seda juhtima õppida.",
+      "rohk": "kust raha tuleb ja kuhu läheb.",
+      "nupp": "Alusta",
+      "link": "Vaata, kuidas see töötab"
+    },
+    "kodu_naasev": {
+      "pealkiri": "Tere taas!",
+      "abitekst": "Täna on hea päev edasi liikuda.",
+      "kaart_pealkiri": "Jätka teekonda",
+      "naitaja1": "Päevi koos Fortuga",
+      "naitaja1_yhik": "päeva",
+      "naitaja2": "Teemad läbitud",
+      "naitaja2_yhik": "teemat",
+      "sonum": "Pisikesed sammud viivad suurte muutusteni."
+    },
+    "miks_valida_fortu": {
+      "read": [
+        [
+          "Praktiline teadmine",
+          "Lihtsad selgitused ja harjutused, mida saad kohe ellu rakendada."
+        ],
+        [
+          "Samm-sammuline teekond",
+          "7 sammu eneseavastust, seejärel praktilised oskused igapäevaseks raha juhtimiseks."
+        ],
+        [
+          "Harjumused, mis püsivad",
+          "Väikesed sammud, mis toovad pikaajalisi tulemusi."
+        ],
+        [
+          "Turvaline ja privaatne",
+          "Sinu andmed on kaitstud ja säilivad ainult sinu jaoks."
+        ],
+        [
+          "Toetav sõber sinu kõrval",
+          "Fortu on alati olemas, et sind motiveerida ja juhendada."
+        ]
+      ],
+      "nupp": "Alusta"
+    },
+    "eneseteadlikkus_sissejuhatus": {
+      "pealkiri": "Kutsun sind oma rahatarkuse teekonnale",
+      "fortu_kone": "Enne kui hakkame koos uusi teadmisi koguma, vaatame, mis on sinu lähtepunkt.",
+      "rohk": "mis on sinu lähtepunkt.",
+      "lõik2": "Edasi on vaja teadmisi, harjumusi ja süsteemi, mis hoiab järjepidevust.",
+      "lõik3": "Pole vahet, kas alustad nullist või sul on juba mõned harjumused olemas.",
+      "nupp": "Jätka"
+    },
+    "eneseteadlikkus_juhis": {
+      "fortu_kone": "Kõigepealt vasta viiele küsimusele. Need aitavad sul näha, kust sinu teekond algab.",
+      "rohk": "kust sinu teekond algab.",
+      "abitekst": "Siin ei ole õigeid vastuseid. Vasta nii, nagu praegu on.",
+      "nupp": "Jätka"
+    },
+    "tulemus": {
+      "vastuste_nupp": "Vaata oma vastuseid",
+      "vastuste_nupp_avatud": "Peida vastused",
+      "nupp": "Jätka"
+    },
+    "abc_sissejuhatus": {
+      "fortu_kone": "Nüüd tead, kust sa alustad. Enne esimest teemat vaatame üle mõned rahatarkuse põhimõisted.",
+      "rohk": "rahatarkuse põhimõisted.",
+      "abitekst": "Kui räägime sama keelt, on uusi teadmisi palju lihtsam omandada.",
+      "nupp": "Jätka",
+      "markus": "15 mõistet, umbes viis minutit."
+    },
+    "abc_kysimus": {
+      "juhis": "Mida see mõiste tähendab?",
+      "nupp_enne": "Kontrolli",
+      "nupp_parast": "Jätka"
+    },
+    "abc_lopp": {
+      "skoori_yhik": "õiget vastust viieteistkümnest",
+      "fortu_kone": "Nüüd räägime sama keelt.",
+      "abitekst": "Need viisteist sõna tulevad edaspidi kogu aeg ette. Kui mõni ununeb, leiad need alati sõnaraamatust.",
+      "nupp": "Jätka"
+    },
+    "sonaraamat": {
+      "sissejuhatus": "Siit leiad kõigi oluliste sõnade seletused. Nimekiri kasvab koos teekonnaga."
+    },
+    "teema_kava": {
+      "abitekst": "Nüüd, kui tead, kust alustad, on aeg pöörata pilk sissepoole.",
+      "nupp": "Alusta"
+    },
+    "profiil": {
+      "teade": "Profiili ei ole veel tehtud."
+    },
+    "lukupohjus": {
+      "teema1": "Avaneb, kui rahatarkuse algus on läbitud.",
+      "muud": "Avaneb, kui eelmine teema on läbitud."
+    }
+  }
+}

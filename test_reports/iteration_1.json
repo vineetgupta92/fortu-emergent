@@ -1,0 +1,31 @@
+{
+  "summary": "Comprehensive frontend-only testing of Fortu Estonian financial-literacy Expo/React Native app via web preview (390x844). All 13 requested feature groups verified end-to-end: login (Google/Apple mock sign-in), new-user home + why screen (5 rows), self-awareness flow (intro/instructions/5 questions with option-0..2, continue disabled until selection, selection changeable, hints without bottom-nav), back-navigation rules (Q→prev Q keeps answer, Q1→instructions, hint→its question, result→question 5), score-band lead on result (band 2 'palju häid harjumusi' verified when answering option 1 everywhere; band 3 'Oskad oma raha juhtida' verified when answering option 2) with no numeric score shown, 'Vaata oma vastuseid' / 'Peida vastused' toggle, ABC pack intro (RAHA LIIGUB) + 15 concepts with Kontrolli→Jätka state machine (locked options after check, Palgapäev correct answer in position 1 per kuvamisjarjekord), abc-done score ('5' + 'viieteistkümnest'), journey topic states (not-started → in-progress after self → completed after both; locks + Estonian reason strings 'Avaneb, kui rahatarkuse algus on läbitud' / 'Avaneb, kui eelmine teema on läbitud'), topic 2 start-button + 7-step plan + toast on Alusta ('Selle sammu sisu ei ole veel valmis.'), dictionary (17 entries, Estonian order: Sissetulek before Sääst, Võlg last; back from dict returns to exact /abc/q/3), profile empty state ('Profiili ei ole veel tehtud.'), returning home ('Tere taas!', continue card deep-links to /abc/q/3 '2. samm · Rahatarkuse ABC', 'Päevi koos Fortuga' = 14 hard-coded, 'Teemad läbitud' = 1 / 5), persistence (reload mid-ABC keeps state and signed-in user, resumes at /abc/q/3), bottom-nav visibility rules (visible on home/journey/dictionary/profile/question/result/topic/abc-intro; hidden on login/instructions/hints/pack-intros). No critical or minor bugs found; the app matches the specification. Only a non-blocking React Native deprecation warning observed in console.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [],
+    "react_native_issues": [
+      {"component": "RN internals (likely bundled dependency)", "issue": "Console warning: 'props.pointerEvents is deprecated. Use style.pointerEvents'. Not blocking; stems from a library using the deprecated prop. Recommend auditing component tree for any pointerEvents prop and moving it to style={{ pointerEvents: ... }}. Reference: observed on all screens; main source likely in a transitive react-native-web dep."}
+    ]
+  },
+  "test_report_links": ["Playwright scripts executed inline (not saved to disk) — flow covers login→self→abc→journey→dictionary→profile→home-returning→persistence"],
+  "action_items": [
+    "Investigate and silence the 'props.pointerEvents is deprecated' warning (likely in a third-party RN component or inside DeepBackground/ScreenShell wrapper)."
+  ],
+  "critical_code_review_comments": [
+    "File sizes healthy (largest = ScreenShell.tsx 168 lines).",
+    "State store is clean, uses functional updates, hydrates from AsyncStorage/localStorage behind progressRepository.",
+    "Mock authService correctly swap-able; no OAuth bleed.",
+    "ABC answer order rendering uses kuvamisjarjekord from sisu.json — verified in UI (Palgapäev correct option is 2nd/pos=1).",
+    "Topic-completion rule enforced in selectors.isTopicComplete; start-topic requires BOTH self + abc done.",
+    "Dictionary back navigation uses an in-memory dictFrom (session only) — works correctly for same-session scenarios."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (skipped per request)", "frontend": "100%"},
+  "seed_data_creation": "None. Mock sign-in creates `demo-google` user; progress stored in localStorage key `fortu.progress.v1`.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All critical flows pass. If retesting, remember: fresh browser session needs login first; use `[data-testid=\"self-result-toggle-answers\"]` (not `self-result-toggle`); ABC uses `[data-testid=\"abc-question-button\"]` for both Kontrolli and Jätka. Persistence works via localStorage key `fortu.progress.v1`.",
+  "rca_of_issue": "No bugs to triage."
+}
